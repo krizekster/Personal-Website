@@ -1,0 +1,102 @@
+---
+const pathname = Astro.url.pathname;
+const isActive = (path: string) => {
+  if (path === '/' && pathname === '/') return true;
+  if (path !== '/' && pathname.startsWith(path)) return true;
+  return false;
+};
+
+const navItems = [
+  { code: '01', label: 'PHILOSOPHY', href: '/about' },
+  { code: '02', label: 'VENTURES_HUB', href: '/ventures' },
+  { code: '03', label: 'THE_BOOK', href: '/the-power-of-gaming' },
+  { code: '04', label: 'DIGITAL_GARDEN', href: '/feed' },
+];
+---
+
+<header class="w-full bg-bg-obsidian border-b border-border-console relative z-40">
+  <div class="px-6 h-16 flex items-center justify-between">
+    <!-- Brutalist Typographic Logo -->
+    <a href="/" class="flex items-center gap-4 group">
+      <div class="border border-border-console px-3 py-1 bg-black group-hover:border-accent-terminal transition-colors duration-300">
+        <span class="text-xs font-mono font-bold tracking-widest text-white group-hover:text-accent-terminal">KRIZEKSTER // SYS</span>
+      </div>
+      <div class="hidden sm:flex flex-col text-left">
+        <span class="text-[9px] font-mono text-zinc-500 leading-none tracking-widest">ECOSYSTEM CONSOLE</span>
+        <span class="text-[9px] font-mono text-zinc-400 font-bold leading-none tracking-widest mt-1">ROOT_ACCESS</span>
+      </div>
+    </a>
+
+    <!-- Exposed High-Density Navigation Links -->
+    <nav class="hidden md:flex items-center gap-6">
+      {navItems.map((item) => (
+        <a 
+          href={item.href} 
+          class={`py-2 px-3 text-[11px] font-mono tracking-widest hover:bg-zinc-950 transition-colors flex items-center gap-1.5 border-r border-border-console last:border-r-0 ${
+            isActive(item.href) ? 'text-accent-terminal bg-zinc-950 font-bold' : 'text-zinc-400'
+          }`}
+        >
+          <span class="text-zinc-600 text-[9px]">{item.code} //</span>
+          <span>{item.label}</span>
+        </a>
+      ))}
+    </nav>
+
+    <!-- Tactical System State Toggle Trigger -->
+    <div class="flex items-center gap-4">
+      <button 
+        id="state-switcher" 
+        class="border border-border-console px-4 py-2 bg-black text-[10px] font-mono tracking-widest text-zinc-400 hover:border-accent-terminal hover:text-white transition-all select-none cursor-pointer"
+        aria-label="Switch System State"
+      >
+        [STATE // <span id="active-state-label" class="text-accent-terminal font-bold">EXEC</span>]
+      </button>
+
+      <!-- Mobile Menu Trigger -->
+      <button 
+        id="mobile-menu-toggle"
+        class="md:hidden border border-border-console w-10 h-10 flex items-center justify-center bg-black hover:border-accent-terminal text-zinc-400 hover:text-white"
+        aria-label="Toggle Console Menu"
+      >
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Dropdown Navigation Grid -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-border-console bg-black px-6 py-4 space-y-2">
+    {navItems.map((item) => (
+      <a 
+        href={item.href} 
+        class={`block py-2.5 px-4 font-mono text-[10px] tracking-widest transition-colors ${
+          isActive(item.href) ? 'bg-zinc-950 text-accent-terminal border-l border-accent-terminal font-bold' : 'text-zinc-400 hover:text-white'
+        }`}
+      >
+        <span class="text-zinc-650 mr-2">{item.code} //</span>
+        <span>{item.label}</span>
+      </a>
+    ))}
+  </div>
+</header>
+
+<script>
+  const mobileToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (mobileToggle && mobileMenu) {
+    mobileToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+
+  // Load and sync correct state switcher label on mount
+  const savedState = localStorage.getItem('system-state') || 'exec';
+  const label = document.getElementById('active-state-label');
+  if (label) {
+    label.textContent = savedState.toUpperCase();
+  }
+</script>

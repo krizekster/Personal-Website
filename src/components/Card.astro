@@ -1,0 +1,69 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  tag?: string;
+  accent?: 'blue' | 'green' | 'steel';
+  hoverGlow?: boolean;
+}
+
+const { 
+  title, 
+  subtitle, 
+  tag, 
+  accent = 'steel',
+  hoverGlow = true 
+} = Astro.props;
+
+const accentClasses = {
+  blue: 'border-blue-900/60 group-hover:border-accent-terminal text-accent-terminal',
+  green: 'border-emerald-950/60 group-hover:border-accent-terminal text-accent-terminal',
+  steel: 'border-border-console group-hover:border-zinc-500 text-zinc-400'
+};
+---
+
+<div class={`group relative bg-black border border-border-console p-6 transition-all duration-300 ${
+  hoverGlow ? 'hover:border-zinc-500 hover:shadow-[0_0_15px_rgba(255,255,255,0.01)]' : ''
+}`}>
+  
+  <!-- Brutalist Wireframe corner ticks -->
+  <span class="absolute top-[-1px] left-[-1px] w-1.5 h-1.5 bg-border-console group-hover:bg-accent-terminal transition-colors"></span>
+  <span class="absolute top-[-1px] right-[-1px] w-1.5 h-1.5 bg-border-console group-hover:bg-accent-terminal transition-colors"></span>
+  <span class="absolute bottom-[-1px] left-[-1px] w-1.5 h-1.5 bg-border-console group-hover:bg-accent-terminal transition-colors"></span>
+  <span class="absolute bottom-[-1px] right-[-1px] w-1.5 h-1.5 bg-border-console group-hover:bg-accent-terminal transition-colors"></span>
+
+  <div class="relative z-10 flex flex-col h-full justify-between">
+    <!-- Header Block -->
+    <div>
+      <div class="flex items-center justify-between mb-4 border-b border-border-console pb-3">
+        {tag && (
+          <span class={`text-[9px] font-mono tracking-widest px-2 py-0.5 border ${accentClasses[accent]} bg-black`}>
+            [{tag.toUpperCase()}]
+          </span>
+        )}
+        {subtitle && (
+          <span class="text-[9px] font-mono text-zinc-500 tracking-widest uppercase">
+            // {subtitle}
+          </span>
+        )}
+      </div>
+
+      {title && (
+        <h3 class="text-sm font-mono font-bold tracking-widest text-white uppercase mb-4 flex items-center gap-2 group-hover:text-accent-terminal transition-colors">
+          <span class="text-zinc-700 font-normal">>></span>
+          <span>{title}</span>
+        </h3>
+      )}
+    </div>
+
+    <!-- Core Content Body -->
+    <div class="text-zinc-400 text-xs font-sans leading-relaxed flex-grow">
+      <slot />
+    </div>
+
+    <!-- Footer Action/Indicators inside Card if needed -->
+    <div class="mt-6 pt-4 border-t border-border-console flex items-center justify-between">
+      <slot name="footer" />
+    </div>
+  </div>
+</div>

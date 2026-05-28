@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/Card.astro';
+---
+
+<BaseLayout 
+  title="SYS.LOG.LITERATURE // THE_POWER_OF_GAMING"
+  description="Archival specifications and core theses of Krishna Soni's debut book 'The Power Of Gaming' released late 2025."
+>
+  <div class="relative py-12 md:py-16 overflow-hidden">
+    <!-- Grid Overlay Background -->
+    <div class="absolute inset-0 grid-bg-tactile opacity-15 z-0"></div>
+
+    <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Left Column: The Brutalist CSS Book Mockup -->
+      <div class="lg:col-span-5 flex justify-center">
+        <!-- 3D Book Layout Container - Lock all corners to 0px -->
+        <div class="relative group perspective-1000">
+          <div class="relative w-64 h-96 bg-bg-obsidian border border-border-console shadow-2xl transform hover:rotate-y-[-10deg] transition-all duration-500 overflow-hidden flex flex-col justify-between p-6">
+            
+            <!-- Book Spine Accent Line -->
+            <div class="absolute left-0 top-0 bottom-0 w-3 bg-gradient-to-r from-zinc-950 to-zinc-900 border-r border-border-console"></div>
+            
+            <!-- Cover Top Telemetry -->
+            <div class="pl-4 flex justify-between items-center text-[8px] font-mono text-zinc-500 tracking-widest uppercase">
+              <span>VOL.01 // SYSTEMIC_LOGIC</span>
+              <span>LATE 2025</span>
+            </div>
+
+            <!-- Cover Central Typography -->
+            <div class="pl-4 py-8 space-y-3">
+              <h2 class="text-[10px] font-mono text-accent-terminal tracking-widest uppercase font-bold">KRISHNA SONI</h2>
+              <h1 class="text-3xl font-display font-black tracking-tighter text-white leading-none uppercase">
+                THE POWER<br/>
+                OF<br/>
+                <span class="text-gradient-terminal font-black">GAMING.</span>
+              </h1>
+              <div class="w-10 h-px bg-zinc-800"></div>
+              <p class="text-[9px] font-mono text-zinc-550 tracking-wider leading-relaxed">
+                SYSTEMIC COGNITIVE PARADIGMS, NARRATIVE LOGIC, AND COMPILER bluePRINT SYSTEMS.
+              </p>
+            </div>
+
+            <!-- Cover Bottom Branding -->
+            <div class="pl-4 flex justify-between items-end">
+              <div class="flex flex-col font-mono text-[7px] tracking-widest text-zinc-600">
+                <span>PUBLISHER</span>
+                <span class="text-[9px] text-zinc-400 font-bold mt-1">KRI ZEK PRESS</span>
+              </div>
+              <!-- Small Gear Icon in Corner -->
+              <svg class="w-6 h-6 text-accent-terminal/20 animate-gear-rotate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M12 2v2M12 20v2M4 12H2M22 12h-2"></path>
+              </svg>
+            </div>
+            
+            <!-- Sheen overlay -->
+            <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Description & Spec matrices -->
+      <div class="lg:col-span-7 space-y-6">
+        <div class="inline-flex items-center gap-2 border border-border-console px-3 py-1 bg-black">
+          <span class="w-1.5 h-1.5 bg-accent-terminal rounded-none animate-pulse"></span>
+          <span class="text-[9px] font-mono tracking-widest text-zinc-400">PUBLISHED DOSSIER // LOG_2025_BOOK</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-display font-black tracking-tighter text-white leading-none uppercase">
+          Mapping the <span class="text-gradient-terminal font-black">cognitive matrix</span> of interactive levels.
+        </h1>
+
+        <p class="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
+          In <strong>The Power Of Gaming</strong>, Krishna Soni maps a systemic framework analyzing interactive environments. Moving past traditional game criticism, this text works as a practical manual for systems architects, detailing how level design vectors, state machine loops, and narrative scaffolding can be extracted to develop beautiful, responsive software.
+        </p>
+
+        <!-- Transaction CTA Module - strict right angles -->
+        <div class="p-6 bg-black border border-border-console flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div class="space-y-1 font-mono uppercase">
+            <span class="text-[8px] text-zinc-550 block">DISTRIBUTION_CORRIDOR // WORLDWIDE</span>
+            <div class="text-sm font-bold text-white tracking-widest">EDITIONS: PRINT & DIGITAL</div>
+            <p class="text-[9px] text-zinc-500 font-sans tracking-wide lowercase">corporate shipment catalogs ready for dispatch.</p>
+          </div>
+          
+          <button class="border border-white px-6 py-3 bg-white text-black font-mono text-xs font-bold hover:bg-transparent hover:text-white transition-colors duration-300 w-full sm:w-auto text-center cursor-pointer">
+            [ACQUIRE_EDITION]
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Core Thesis / Chapters Section -->
+  <section class="py-16 border-t border-border-console">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <!-- Left side: Core Thesis -->
+      <div class="space-y-6">
+        <span class="text-xs font-mono text-accent-terminal tracking-widest">[01 // CORE_THESIS]</span>
+        <h2 class="text-lg font-mono font-bold text-white uppercase mt-1">Systemic World Synthesis</h2>
+        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans">
+          Why does a quest inside <em>The Witcher 3</em> or level progression in <em>The Last of Us</em> feel incredibly unified? They implement strict **Narrative Encapsulation rules**. Every asset, database schema call, and dialog branch interfaces as a deterministic component. 
+        </p>
+        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans">
+          When software architectures respect these same level design constraints—mapping the user's flow, establishing non-intrusive metadata coordinates, and deploying crisp visual response clicks—we construct digital systems that are beautiful and highly cohesive.
+        </p>
+        <div class="p-4 border border-border-console bg-black/40 font-mono text-[9px] text-zinc-500 leading-relaxed uppercase tracking-wider">
+          "A great user interface is a level waiting to be navigated. The developer is the watchmaker ticking in the silent background."
+        </div>
+      </div>
+
+      <!-- Right side: Table of Contents -->
+      <div class="space-y-6 font-mono">
+        <span class="text-xs font-mono text-accent-terminal tracking-widest">[02 // MATRIX_INDEX]</span>
+        <h2 class="text-lg font-mono font-bold text-white uppercase mt-1">Structural Sections</h2>
+
+        <div class="space-y-0 border-t border-l border-border-console text-[10px]">
+          <div class="p-3 border-r border-b border-border-console bg-black/40 flex items-center justify-between">
+            <span class="text-zinc-300">SECTION 01 // THE HOROLOGICAL BLUEPRINT</span>
+            <span class="text-zinc-550">P. 017</span>
+          </div>
+          <div class="p-3 border-r border-b border-border-console bg-black/40 flex items-center justify-between">
+            <span class="text-zinc-300">SECTION 02 // NEURAL LOOPS & STATE MACHINES</span>
+            <span class="text-zinc-550">P. 053</span>
+          </div>
+          <div class="p-3 border-r border-b border-border-console bg-black/40 flex items-center justify-between">
+            <span class="text-zinc-300">SECTION 03 // VIBE CODING PARADIGMS & SYNTHETIC PROMPTS</span>
+            <span class="text-zinc-550">P. 095</span>
+          </div>
+          <div class="p-3 border-r border-b border-border-console bg-black/40 flex items-center justify-between">
+            <span class="text-zinc-300">SECTION 04 // THE GEOMETRIC USER MATRIX</span>
+            <span class="text-zinc-550">P. 143</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

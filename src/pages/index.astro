@@ -1,0 +1,203 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/Card.astro';
+import { getCollection } from 'astro:content';
+
+// Query latest articles and sort by pubDate descending
+const allArticles = await getCollection('feed');
+const latestArticles = allArticles
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<BaseLayout>
+  <!-- Brutalist Industrial Hero Console Section -->
+  <section class="relative py-12 md:py-20 border-b border-border-console overflow-hidden">
+    <!-- exposed grid background -->
+    <div class="absolute inset-0 grid-bg-tactile opacity-20 z-0"></div>
+
+    <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <!-- High-Density Typographic Core -->
+      <div class="lg:col-span-7 space-y-6">
+        <div class="inline-flex items-center gap-2 border border-border-console px-3 py-1 bg-black">
+          <span class="w-1.5 h-1.5 bg-accent-terminal rounded-none animate-pulse"></span>
+          <span class="text-[9px] font-mono tracking-widest text-zinc-400">ARCHITECT.CONSOLE // SYS.ROOT // ID_001</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl md:text-7xl font-display font-black tracking-tighter leading-none text-white uppercase">
+          KRIZEKSTER<br/>
+          <span class="text-gradient-terminal font-black">SYSTEM_SYNTH.</span>
+        </h1>
+
+        <p class="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed max-w-xl">
+          Authorized digital terminal of <strong class="text-white">Krishna Soni (Krizekster)</strong>. CS Engineer, Inducted Anthropic Ecosystem Partner, and Statistical Unicorn executing at the critical convergence of high-availability corporate backends and custom modular frontend systems.
+        </p>
+
+        <!-- Technical Action Terminal Row -->
+        <div class="flex flex-wrap gap-4 pt-4 font-mono">
+          <a href="/ventures" class="border border-white px-5 py-3 bg-white text-black text-xs font-bold hover:bg-transparent hover:text-white transition-colors duration-300">
+            [EXECUTE // SHOWCASE]
+          </a>
+          <a href="/about" class="border border-border-console px-5 py-3 bg-black text-xs text-zinc-300 hover:border-accent-terminal hover:text-white transition-all duration-300">
+            [READ // PHILOSOPHY]
+          </a>
+        </div>
+      </div>
+
+      <!-- Cinematic exposed wireframe Grid illustration -->
+      <div class="lg:col-span-5 flex justify-center lg:justify-end">
+        <div class="relative w-72 h-72 sm:w-80 sm:h-80 border border-border-console bg-black flex items-center justify-center p-6 shadow-2xl group overflow-hidden">
+          
+          <!-- Outer Brutalist Tick Marks -->
+          <span class="absolute top-2 left-2 text-[8px] font-mono text-zinc-700 font-bold">SEC_01 // COR_Y2</span>
+          <span class="absolute top-2 right-2 text-[8px] font-mono text-zinc-700 font-bold">GRID.SYS</span>
+          <span class="absolute bottom-2 left-2 text-[8px] font-mono text-zinc-700 font-bold">COORD // 22.05 N</span>
+          <span class="absolute bottom-2 right-2 text-[8px] font-mono text-zinc-700 font-bold">82.15 E</span>
+
+          <!-- exposed coordinate radar grid -->
+          <svg class="w-full h-full text-zinc-800/80 group-hover:text-accent-terminal/20 transition-colors duration-500 absolute" viewBox="0 0 100 100">
+            <!-- Grid Lines -->
+            <line x1="0" y1="50" x2="100" y2="50" stroke="currentColor" stroke-width="0.5" />
+            <line x1="50" y1="0" x2="50" y2="100" stroke="currentColor" stroke-width="0.5" />
+            <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="1 3" />
+            <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" stroke-width="0.5" />
+            <circle cx="50" cy="50" r="10" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="4 4" />
+            
+            <!-- Target Box rotating -->
+            <rect x="35" y="35" width="30" height="30" fill="none" stroke="currentColor" stroke-width="0.75" class="animate-gear-rotate origin-center" />
+          </svg>
+
+          <!-- Core telemetry readouts -->
+          <div class="relative z-10 w-28 h-28 border border-accent-terminal/40 bg-black flex flex-col items-center justify-center text-center p-4">
+            <span class="text-[8px] font-mono text-zinc-500 tracking-wider">REF_FREQUENCY</span>
+            <span class="text-sm font-mono font-bold text-accent-terminal tracking-widest animate-pulse">4.00 HZ</span>
+            <span class="text-[8px] font-mono text-zinc-400 mt-1.5 uppercase">// TEMP_OK //</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Ecosystem Matrix Section -->
+  <section class="py-16 border-b border-border-console">
+    <div class="mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+      <div>
+        <span class="text-xs font-mono text-accent-terminal tracking-widest">[01 // ECOSYSTEM_HUB]</span>
+        <h2 class="text-xl sm:text-2xl font-mono font-bold text-white uppercase mt-1">Dual-Track Architecture</h2>
+      </div>
+      <p class="text-zinc-500 text-[10px] font-mono max-w-sm uppercase tracking-widest leading-relaxed">
+        Corporate enterprise pipelines sync dynamically with B2C consumer architectures.
+      </p>
+    </div>
+
+    <!-- Exposed Grid - adjacently aligned cards with gap-0 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-l border-border-console">
+      <!-- Corporate Track Card -->
+      <div class="border-r border-b border-border-console">
+        <Card 
+          title="KRI ZEK CORP" 
+          tag="B2B // Enterprise" 
+          subtitle="USA // INDIA NODE"
+          accent="blue"
+          hoverGlow={true}
+        >
+          <p class="mb-6 text-xs sm:text-sm font-sans leading-relaxed text-zinc-400">
+            High-availability systems engineering, corporate B2B networks, and secure database clustering. Positioned as an inductee in the **Anthropic Partner Ecosystem** synthesizing LLM state layers with rigid engineering backends.
+          </p>
+          <ul class="space-y-2 mb-6 text-[10px] font-mono text-zinc-500 uppercase">
+            <li class="flex items-center gap-2">
+              <span class="w-1 h-1 bg-accent-terminal"></span>
+              <span>Enterprise Redundancy Pipelines</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="w-1 h-1 bg-accent-terminal"></span>
+              <span>Anthropic AI Scaffold Synthesis</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="w-1 h-1 bg-accent-terminal"></span>
+              <span>Cross-Corridor US/India Engineering</span>
+            </li>
+          </ul>
+          <div slot="footer" class="w-full flex justify-between items-center text-[10px] font-mono">
+            <span class="text-zinc-650">SYS.FILES // B2B_SECURE</span>
+            <a href="/ventures#krizek" class="text-accent-terminal hover:text-white transition-colors">
+              [ENTER_DOSSIER]
+            </a>
+          </div>
+        </Card>
+      </div>
+
+      <!-- Consumer Product Track Card -->
+      <div class="border-r border-b border-border-console">
+        <Card 
+          title="ALTERED BRILLIANCE" 
+          tag="B2C // Mobile" 
+          subtitle="PRODUCT ECOSYSTEM"
+          accent="green"
+          hoverGlow={true}
+        >
+          <p class="mb-6 text-xs sm:text-sm font-sans leading-relaxed text-zinc-400">
+            Consumer mobile product lines built strictly under **Zero-Bloat & Offline-First manifesto**. Translating clean client sqlite engines and responsive layout structures into high-performance utility software.
+          </p>
+          <ul class="space-y-2 mb-6 text-[10px] font-mono text-zinc-500 uppercase">
+            <li class="flex items-center gap-2">
+              <span class="w-1 h-1 bg-accent-terminal"></span>
+              <span>Offline-First Sqlite Hydration</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="w-1 h-1 bg-accent-terminal"></span>
+              <span>Tactile React Native Layouts</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="w-1 h-1 bg-accent-terminal"></span>
+              <span>Zero telemetry tracking bloat</span>
+            </li>
+          </ul>
+          <div slot="footer" class="w-full flex justify-between items-center text-[10px] font-mono">
+            <span class="text-zinc-650">SYS.FILES // B2C_STABLE</span>
+            <a href="/ventures#altered-brilliance" class="text-accent-terminal hover:text-white transition-colors">
+              [ENTER_DOSSIER]
+            </a>
+          </div>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Insights / Feed Section -->
+  <section class="py-16">
+    <div class="mb-10 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+      <div>
+        <span class="text-xs font-mono text-accent-terminal tracking-widest">[02 // DIGITAL_GARDEN]</span>
+        <h2 class="text-xl sm:text-2xl font-mono font-bold text-white uppercase mt-1">Knowledge Archive Logs</h2>
+      </div>
+      <a href="/feed" class="text-xs font-mono text-zinc-400 hover:text-accent-terminal transition-colors">
+        [VIEW_ALL_LOGS]
+      </a>
+    </div>
+
+    <!-- Feed exposed grid loop - adjacent blocks with gap-0 -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-l border-border-console">
+      {latestArticles.map((article) => (
+        <div class="border-r border-b border-border-console">
+          <Card 
+            title={article.data.title}
+            tag={article.data.category}
+            subtitle={article.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })}
+            accent={article.data.category === 'Engineering' ? 'blue' : article.data.category === 'Ventures' ? 'green' : 'steel'}
+          >
+            <p class="text-xs text-zinc-400 leading-relaxed mb-6 line-clamp-3">
+              {article.data.description}
+            </p>
+            <div slot="footer" class="w-full flex justify-between items-center text-[10px] font-mono">
+              <span class="text-zinc-600">{article.data.telemetryCode}</span>
+              <a href={`/feed/${article.id}`} class="text-accent-terminal hover:text-white transition-colors">
+                [READ_ENTRY]
+              </a>
+            </div>
+          </Card>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

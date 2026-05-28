@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Timeline from '../components/Timeline.astro';
+import Card from '../components/Card.astro';
+---
+
+<BaseLayout 
+  title="SYS.LOG.PHILOSOPHY // KRISHNA SONI"
+  description="Exposing the systems thinking, horological paradigms, Anthropic developer networks, vegetarian logistics, and rabbit telemetry of Krishna Soni."
+>
+  <!-- Page Header Dossier -->
+  <section class="py-12 border-b border-border-console">
+    <div class="max-w-3xl space-y-4">
+      <span class="text-xs font-mono text-accent-terminal tracking-widest">// PATH_AND_SYSTEMIC_PHILOSOPHY</span>
+      <h1 class="text-4xl sm:text-5xl font-display font-black tracking-tighter text-white uppercase leading-none">
+        Systems design as <span class="text-gradient-terminal font-black">intellectual craft</span>.
+      </h1>
+      <p class="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
+        Building high-performance software requires more than programming syntax; it demands a unified semantic philosophy. This archive tracks the intersections of mathematics, structural horology, Orwellian linguistic clarity, and B2B systems execution.
+      </p>
+    </div>
+  </section>
+
+  <!-- Interactive Timeline Archive -->
+  <section class="py-16 border-b border-border-console relative">
+    <div class="absolute inset-0 grid-bg-tactile opacity-10 z-0"></div>
+    <div class="relative z-10 mb-12 text-center max-w-xl mx-auto space-y-2">
+      <span class="text-xs font-mono text-accent-terminal tracking-widest">[01 // MILESTONES]</span>
+      <h2 class="text-xl sm:text-2xl font-mono font-bold text-white uppercase mt-1">Ecosystem Evolution</h2>
+      <p class="text-zinc-500 text-xs font-sans mt-3 leading-relaxed">
+        Tracing the development sequence from foundational computer science engineering nodes to international corporate orchestration.
+      </p>
+    </div>
+    
+    <Timeline />
+  </section>
+
+  <!-- Foundational Pillars Section -->
+  <section class="py-16">
+    <div class="mb-12 max-w-xl space-y-2">
+      <span class="text-xs font-mono text-accent-terminal tracking-widest">[02 // CORE_PILLARS]</span>
+      <h2 class="text-xl sm:text-2xl font-mono font-bold text-white uppercase mt-1">Identity & Systems Anchors</h2>
+      <p class="text-zinc-500 text-xs font-sans mt-2 leading-relaxed">
+        The systemic constructs, horological inspirations, and environmental relationships grounding Krishna's execution loops.
+      </p>
+    </div>
+
+    <!-- Brutalist Exposed Adjacent Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-l border-border-console">
+      
+      <!-- Pillar 1: Mechanical Horology -->
+      <div class="border-r border-b border-border-console">
+        <Card 
+          title="Horological Modularity" 
+          tag="Precision" 
+          subtitle="Automatic Watches" 
+          accent="blue"
+          hoverGlow={true}
+        >
+          <p class="text-xs leading-relaxed text-zinc-400 mb-6">
+            Appreciation for premium **automatic watches** (Seiko, Tissot, Hamilton) drives the architecture of our software components. Mechanical horology features zero microchips—only beautifully coupled 90-degree gears operating in unidirectional harmony.
+          </p>
+          <p class="text-xs leading-relaxed text-zinc-600 font-mono">
+            // Blueprints: decoupled Astro components operating as custom chronograph movement gears.
+          </p>
+        </Card>
+      </div>
+
+      <!-- Pillar 2: Systemic Philosophy -->
+      <div class="border-r border-b border-border-console">
+        <Card 
+          title="Linguistic Entropy" 
+          tag="Philosophy" 
+          subtitle="Orwell & Crichton" 
+          accent="steel"
+          hoverGlow={true}
+        >
+          <p class="text-xs leading-relaxed text-zinc-400 mb-6">
+            Guided by **George Orwell's** critique of linguistic decay and **Michael Crichton's** warnings on chaotic systemic integration. Minimal code translates to clean thoughts. We construct deterministic barriers to block systemic entropy.
+          </p>
+          <p class="text-xs leading-relaxed text-zinc-600 font-mono">
+            // Blueprint: "Systemic complexity is the enemy. Build hermetic boundaries to prevent state leakage."
+          </p>
+        </Card>
+      </div>
+
+      <!-- Pillar 3: Life & Companion -->
+      <div class="border-r border-b border-border-console">
+        <Card 
+          title="Vegetarian & Rabbit" 
+          tag="Ecology" 
+          subtitle="Nenii Babuu approved" 
+          accent="green"
+          hoverGlow={true}
+        >
+          <p class="text-xs leading-relaxed text-zinc-400 mb-6">
+            Committed to an ecological, compassionate **vegetarian lifestyle**. Co-piloting daily systems engineering tasks is **Nenii Babuu**, his rabbit, who serves as a mascot for clean, quiet, and highly focused development operations.
+          </p>
+          <p class="text-xs leading-relaxed text-zinc-600 font-mono">
+            // Blueprint: Synchronizing technological synthesis with ecological preservation and quiet focus.
+          </p>
+        </Card>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

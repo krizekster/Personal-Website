@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FeedSearch from '../../components/FeedSearch.astro';
+import { getCollection } from 'astro:content';
+
+// Get and sort all articles in the catalog
+const rawArticles = await getCollection('feed');
+const sortedArticles = rawArticles.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+// High-density numeric archival date formatter: YYYY.MM.DD
+const formatDate = (date: Date) => {
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  return `${yyyy}.${mm}.${dd}`;
+};
+
+// Map metadata to flat structured schema for the tabular index
+const articlesIndexData = sortedArticles.map((article) => ({
+  slug: article.id,
+  title: article.data.title,
+  description: article.data.description,
+  pubDate: formatDate(article.data.pubDate),
+  category: article.data.category,
+  tags: article.data.tags,
+  telemetryCode: article.data.telemetryCode,
+  readTime: article.data.readTime
+}));
+---
+
+<BaseLayout 
+  title="SYS.LOG.DATABASE // DIGITAL GARDEN"
+  description="Exposed knowledge dossiers and system blueprints cataloged inside Krizekster's personal digital garden."
+>
+  <!-- Page Header -->
+  <section class="py-12 border-b border-border-console">
+    <div class="max-w-3xl space-y-4">
+      <span class="text-xs font-mono text-accent-terminal tracking-widest">// ARCHIVE_DOSSIER_INDEX</span>
+      <h1 class="text-4xl sm:text-5xl font-display font-black tracking-tighter text-white uppercase leading-none">
+        Knowledge archive & <span class="text-gradient-terminal font-black">tabular dossiers</span>.
+      </h1>
+      <p class="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
+        High-density archival indexing of Krishna Soni's technical investigations. Searching is completed instantly in local memory via precompiled static tables.
+      </p>
+    </div>
+  </section>
+
+  <!-- Instant Search & Dynamic Grid Catalog -->
+  <section class="py-12">
+    <FeedSearch articles={articlesIndexData} />
+  </section>
+</BaseLayout>

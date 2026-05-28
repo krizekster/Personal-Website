@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+// Generate static routes for all available articles
+export async function getStaticPaths() {
+  const feedEntries = await getCollection('feed');
+  return feedEntries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+// Format date YYYY.MM.DD
+const formatDate = (date: Date) => {
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  return `${yyyy}.${mm}.${dd}`;
+};
+
+const formattedDate = formatDate(entry.data.pubDate);
+---
+
+<BaseLayout 
+  title={`${entry.data.title} // KRIZEKSTER`}
+  description={entry.data.description}
+>
+  <article class="max-w-3xl mx-auto py-8">
+    
+    <!-- Navigation Back Link -->
+    <a href="/feed" class="inline-flex items-center gap-2 text-xs font-mono text-zinc-500 hover:text-accent-terminal transition-colors mb-10 group">
+      <span>&lt;&lt; BACK_TO_DOSSIER_INDEX</span>
+    </a>
+
+    <!-- Editorial Header Block -->
+    <header class="space-y-6 pb-8 border-b border-border-console mb-10 relative">
+      <div class="flex flex-wrap items-center gap-3">
+        <span class={`text-[9px] font-mono tracking-widest px-2.5 py-0.5 border bg-black ${
+          entry.data.category === 'Engineering' ? 'border-blue-900/60 text-accent-blue' :
+          entry.data.category === 'Ventures' ? 'border-emerald-950/60 text-emerald-500' : 'border-border-console text-zinc-500'
+        }`}>
+          [{entry.data.category.toUpperCase()}]
+        </span>
+        <span class="text-[9px] font-mono text-zinc-550 border border-border-console px-2 py-0.5 bg-black">{entry.data.telemetryCode}</span>
+        <span class="text-[10px] font-mono text-zinc-500">{entry.data.readTime}</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-display font-black tracking-tighter text-white uppercase leading-none">
+        {entry.data.title}
+      </h1>
+
+      <p class="text-zinc-400 text-xs sm:text-sm leading-relaxed italic border-l border-accent-terminal pl-4 font-mono">
+        // {entry.data.description}
+      </p>
+
+      <!-- Spec Grid Details -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-border-console text-xs font-mono text-zinc-500">
+        <div class="flex justify-between sm:justify-start gap-4">
+          <span class="text-zinc-600">ARCHIVAL_DATE:</span>
+          <span class="text-white font-bold">{formattedDate}</span>
+        </div>
+        {entry.data.watchModelSync && (
+          <div class="flex justify-between sm:justify-start gap-4">
+            <span class="text-zinc-600">HOROLOGY_SYNC:</span>
+            <span class="text-accent-terminal font-bold flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-accent-terminal rounded-none animate-pulse"></span>
+              {entry.data.watchModelSync}
+            </span>
+          </div>
+        )}
+      </div>
+    </header>
+
+    <!-- Rich Brutalist Content Body -->
+    <div class="prose prose-invert max-w-none text-zinc-300 font-serif leading-relaxed text-sm sm:text-base space-y-6">
+      <Content />
+    </div>
+
+    <!-- Tags Row Footer -->
+    <footer class="mt-12 pt-8 border-t border-border-console space-y-4">
+      <div class="flex flex-wrap gap-2">
+        {entry.data.tags.map((tag) => (
+          <span class="text-[9px] font-mono text-zinc-500 border border-border-console px-2 py-1 bg-black">
+            [{tag.toUpperCase()}]
+          </span>
+        ))}
+      </div>
+      
+      <!-- Interactive bottom status -->
+      <div class="w-full flex justify-between items-center text-[9px] font-mono text-zinc-500 pt-4 border-t border-border-console">
+        <span>SHA-256: 9F86D081884C7D659A2FEAA0C55AD015A3BF4F1B2B0B822CD15D6C15B0F00A08</span>
+        <span>SYS.EOF // LOG_COMPLETED</span>
+      </div>
+    </footer>
+
+  </article>
+</BaseLayout>
