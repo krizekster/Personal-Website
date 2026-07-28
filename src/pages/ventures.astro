@@ -3,174 +3,62 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Card from '../components/Card.astro';
 ---
 
-<BaseLayout 
-  title="SYS.LOG.VENTURES // KRIZEKSTER"
-  description="Archival technical dossiers for KRI ZEK LLC and Altered Brilliance Mobile Application Infrastructure."
->
-  <!-- Page Header -->
-  <section class="py-12 border-b border-border-console">
-    <div class="max-w-3xl space-y-4">
-      <span class="text-xs font-mono text-accent-terminal tracking-widest">// ARCHIVAL_VENTURES_CATALOG</span>
-      <h1 class="text-4xl sm:text-5xl font-display font-black tracking-tighter text-white uppercase leading-none">
-        The Dual Tracks: <span class="text-gradient-terminal font-black">B2B Core & B2C Product</span>.
-      </h1>
-      <p class="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed">
-        Krishna Soni's corporate structures segment into corporate enterprise logic (KRI ZEK LLC & India) and high-performance consumer utilities (Altered Brilliance Mobile Ecosystem).
-      </p>
-    </div>
+<BaseLayout title="Ventures — Krize Kster" description="The ventures and product work of Krize Kster.">
+  <section class="page-hero">
+    <p class="eyebrow">Ventures / 02</p>
+    <h1 data-parallax="0.04">Different directions. One standard of care.</h1>
+    <p>From complex systems to calm consumer tools, each venture is a way of making technology more useful in the real world.</p>
   </section>
 
-  <!-- Venture Showcase: KRI ZEK -->
-  <section id="krizek" class="py-16 border-b border-border-console scroll-mt-20">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      <!-- Metadata Block -->
-      <div class="lg:col-span-5 space-y-6">
-        <div class="flex items-center gap-2 text-xs font-mono text-accent-terminal tracking-widest">
-          <span>[01] CORPORATE FILE // SYS.ROOT</span>
+  <section id="krizek" class="border-y border-line bg-[#31433a] text-paper">
+    <div class="section-wrap">
+      <div class="grid gap-10 lg:grid-cols-[1fr_.8fr] lg:items-end">
+        <div>
+          <p class="eyebrow text-mist">01 / Enterprise systems</p>
+          <h2 data-parallax="0.05" class="mt-4 text-[clamp(5rem,13vw,13rem)] font-extrabold leading-[.7] tracking-[-.12em]">KRI<br />ZEK</h2>
         </div>
-        
-        <h2 class="text-2xl sm:text-3xl font-mono font-bold text-white uppercase leading-none">
-          KRI ZEK LLC (USA) <br/>
-          <span class="text-zinc-500 font-normal">& KRI ZEK INDIA PRIVATE LIMITED</span>
-        </h2>
-        
-        <p class="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-          KRI ZEK serves as the authoritative B2B systems architect engine of the ecosystem. It coordinates high-availability data channels, secure corporate structures, B2B network consultancies, and generative AI synthesis across US and Indian corridors.
-        </p>
-
-        <div class="border border-border-console p-4 bg-black/40">
-          <div class="grid grid-cols-2 gap-4 text-[10px] font-mono uppercase tracking-wider text-zinc-500">
-            <div>
-              <span>ESTABLISHED:</span>
-              <span class="text-white block font-bold mt-1">2023 // SECURE</span>
-            </div>
-            <div>
-              <span>PARTNERSHIP:</span>
-              <span class="text-accent-terminal block font-bold mt-1">Anthropic Ecosystem</span>
-            </div>
-            <div class="mt-2">
-              <span>DOMICILE:</span>
-              <span class="text-white block font-bold mt-1">USA (LLC) & INDIA (PVT)</span>
-            </div>
-            <div class="mt-2">
-              <span>UPTIME STATUS:</span>
-              <span class="text-accent-terminal block font-bold mt-1 animate-pulse">100% OPERATIONAL</span>
-            </div>
-          </div>
+        <div>
+          <p class="text-xl leading-relaxed tracking-[-.04em] text-mist">KRI ZEK is the enterprise-facing side of the work: technology strategy, dependable engineering, and systems designed to meet ambitious needs with clarity.</p>
+          <a href="https://krizek.com" target="_blank" rel="noopener noreferrer" class="button button-light mt-8 border-paper/40 bg-transparent text-paper hover:bg-paper hover:text-ink">Visit krizek.com <span aria-hidden="true">↗</span></a>
         </div>
       </div>
-
-      <!-- Detail Grid Column - Adjacent blocks -->
-      <div class="lg:col-span-7 space-y-0 border-t border-l border-border-console">
-        <div class="border-r border-b border-border-console">
-          <Card 
-            title="Enterprise Systems Auditing & Design" 
-            tag="B2B Systems" 
-            accent="blue" 
-            hoverGlow={true}
-          >
-            <p class="text-xs sm:text-sm text-zinc-400 mb-4 leading-relaxed font-sans">
-              Scaling and auditing high-availability pipelines for enterprise logistics, fintech transaction grids, and corporate network setups. We deploy strictly decoupled software configurations with automatic recovery triggers.
-            </p>
-            <div class="text-[9px] font-mono text-zinc-500">
-              [SYS.METRICS: CLUSTERING // REST_API // REDUNDANCY_SYNC]
-            </div>
-          </Card>
+      <div class="mt-16 grid gap-5 md:grid-cols-2">
+        <div class="rounded-[1.35rem] border border-paper/20 p-7">
+          <p class="eyebrow text-mist">What it is for</p>
+          <h3 class="mt-5 text-3xl font-bold leading-[.95] tracking-[-.07em]">Complex work deserves a steady hand.</h3>
+          <p class="mt-5 text-sm leading-relaxed text-mist">A practical partner for businesses that need systems, software, and product decisions to hold up over time.</p>
         </div>
-
-        <div class="border-r border-b border-border-console">
-          <Card 
-            title="Generative AI Prompt Synthesis" 
-            tag="Anthropic Partner" 
-            accent="blue" 
-            hoverGlow={true}
-          >
-            <p class="text-xs sm:text-sm text-zinc-400 mb-4 leading-relaxed font-sans">
-              Inducted in the Anthropic Ecosystem Partner network. We specialize in mapping semantic prompt structures with hard technical compilers (Vibe Coding paradigms). This enables deterministic output channels for enterprise automation.
-            </p>
-            <div class="text-[9px] font-mono text-zinc-500">
-              [SYS.METRICS: CLAUDE_PIPELINE // SEMANTIC_PROMPTING // STABLE_SYNTAX]
-            </div>
-          </Card>
+        <div class="rounded-[1.35rem] border border-paper/20 p-7">
+          <p class="eyebrow text-mist">Areas of focus</p>
+          <ul class="mt-5 space-y-3 text-sm text-mist">
+            <li class="border-b border-paper/15 pb-3">Technology strategy and product direction</li>
+            <li class="border-b border-paper/15 pb-3">Reliable digital systems and workflows</li>
+            <li>AI-enabled product and operational thinking</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Venture Showcase: Altered Brilliance -->
-  <section id="altered-brilliance" class="py-16 scroll-mt-20">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      <!-- Metadata Block -->
-      <div class="lg:col-span-5 space-y-6">
-        <div class="flex items-center gap-2 text-xs font-mono text-accent-terminal tracking-widest">
-          <span>[02] CONSUMER FILE // SYS.PRODUCT</span>
-        </div>
-        
-        <h2 class="text-2xl sm:text-3xl font-mono font-bold text-white uppercase leading-none">
-          Altered Brilliance <br/>
-          <span class="text-zinc-500 font-normal">Mobile Platform Ecosystem</span>
-        </h2>
-        
-        <p class="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-          Altered Brilliance is the consumer product division, delivering beautifully crafted, high-performance mobile utilities that help users log metrics, optimize behavior, and track time without bloated SDKs or tracking telemetry.
-        </p>
-
-        <div class="border border-border-console p-4 bg-black/40">
-          <div class="grid grid-cols-2 gap-4 text-[10px] font-mono uppercase tracking-wider text-zinc-500">
-            <div>
-              <span>DISTRIBUTION:</span>
-              <span class="text-white block font-bold mt-1">iOS App / Play Store</span>
-            </div>
-            <div>
-              <span>ARCHITECT:</span>
-              <span class="text-accent-terminal block font-bold mt-1">Zero-Bloat Manifesto</span>
-            </div>
-            <div class="mt-2">
-              <span>CODEBASE:</span>
-              <span class="text-white block font-bold mt-1">Tactile React Native</span>
-            </div>
-            <div class="mt-2">
-              <span>SYNC MATRIX:</span>
-              <span class="text-white block font-bold mt-1">SQLite Offline-First</span>
-            </div>
-          </div>
-        </div>
+  <section id="altered-brilliance" class="section-wrap scroll-mt-6">
+    <div class="grid gap-10 lg:grid-cols-[.9fr_1.1fr] lg:items-start">
+      <div class="rounded-[2rem] bg-[#d7e0ca] p-8 sm:p-12">
+        <p class="eyebrow">02 / Consumer products</p>
+        <h2 data-parallax="0.04" class="mt-8 text-[clamp(4.2rem,8vw,8rem)] font-extrabold leading-[.78] tracking-[-.11em]">Altered<br />Brilliance</h2>
       </div>
-
-      <!-- Detail Grid Column - Adjacent blocks -->
-      <div class="lg:col-span-7 space-y-0 border-t border-l border-border-console">
-        <div class="border-r border-b border-border-console">
-          <Card 
-            title="Zero-Bloat, Offline-First Architecture" 
-            tag="B2C Philosophy" 
-            accent="green" 
-            hoverGlow={true}
-          >
-            <p class="text-xs sm:text-sm text-zinc-400 mb-4 leading-relaxed font-sans">
-              Unlike typical modern applications, Altered Brilliance products ship with zero external analytics tracking, no bloated social SDKs, and execute instantly through local SQLite databases that synchronize silently in the background.
-            </p>
-            <div class="text-[9px] font-mono text-zinc-500">
-              [SYS.METRICS: SQLite_ENGINE // LOCAL_STATE // QUICK_BOOT]
-            </div>
-          </Card>
-        </div>
-
-        <div class="border-r border-b border-border-console">
-          <Card 
-            title="Tactile UI / Fluid Spacing Scale" 
-            tag="Aesthetic Design" 
-            accent="green" 
-            hoverGlow={true}
-          >
-            <p class="text-xs sm:text-sm text-zinc-400 mb-4 leading-relaxed font-sans">
-              Inspired by the satisfying mechanical snap of pushing chronograph start buttons on Tissot and Seiko chronometers, our UI features crisp, non-bloated micro-animations, glassmorphic interfaces, and responsive spacing grids.
-            </p>
-            <div class="text-[9px] font-mono text-zinc-500">
-              [SYS.METRICS: CHRONO_TRANSITIONS // GLASS_UI // GEOMETRIC_SPACING]
-            </div>
-          </Card>
-        </div>
+      <div class="lg:pt-12">
+        <p class="eyebrow">A product studio</p>
+        <p class="mt-5 max-w-2xl text-[clamp(1.35rem,2.5vw,2rem)] leading-[1.36] tracking-[-.045em] text-ink-soft">A home for consumer experiences that feel lighter, faster, and more useful. The focus is on simple, mobile-first tools that respect people’s attention.</p>
+        <a href="https://alteredbrilliance.com" target="_blank" rel="noopener noreferrer" class="button button-dark mt-8">Visit Altered Brilliance <span aria-hidden="true">↗</span></a>
       </div>
+    </div>
+    <div class="mt-12 grid gap-5 md:grid-cols-2">
+      <Card title="Quiet by design" tag="Product principle" subtitle="Less clutter" accent="green">
+        <p>Useful experiences do not need to demand attention. Each decision starts with a question: can this be simpler, faster, and easier to return to?</p>
+      </Card>
+      <Card title="Built for the everyday" tag="Product principle" subtitle="Mobile-first" accent="blue">
+        <p>The products live in the moments between everything else — a reason to make the interaction direct, dependable, and genuinely pleasant.</p>
+      </Card>
     </div>
   </section>
 </BaseLayout>

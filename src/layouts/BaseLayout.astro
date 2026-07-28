@@ -9,119 +9,83 @@ interface Props {
 }
 
 const {
-  title = "KRIZEKSTER // SYSTEMS CONSOLE // ROOT",
-  description = "Archival terminal and corporate-product matrix of Krishna Soni (Krizekster). Administering KRI ZEK entities and Altered Brilliance applications."
+  title = 'Krize Kster — Engineer, Founder & Writer',
+  description = 'The personal website of Krize Kster: thoughtful digital products, ventures, and writing.'
 } = Astro.props;
 ---
 
-<!DOCTYPE html>
-<html lang="en" class="state-exec">
+<!doctype html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-
-    <!-- SEO Metadata -->
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
-    
-    <!-- System State Selector Initialization (Executes instantly to prevent layout flash) -->
-    <script is:inline>
-      const systemState = (() => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('system-state')) {
-          return localStorage.getItem('system-state');
-        }
-        return 'exec'; // Default to Executive corporate interface
-      })();
-      document.documentElement.className = systemState === 'exec' ? 'state-exec' : 'state-term';
-    </script>
   </head>
-  
-  <body class="min-h-screen flex flex-col bg-bg-obsidian selection:bg-accent-terminal selection:text-black antialiased relative">
-    
-    <!-- Structural Exposed Grid Wrapper -->
-    <div class="flex-grow flex flex-col border-l border-r border-border-console max-w-[1400px] w-full mx-auto relative bg-bg-obsidian">
-      
-      <!-- Monospace Telemetry Grid Header Line -->
-      <div class="w-full border-b border-border-console px-6 py-2 flex justify-between items-center text-[10px] font-mono tracking-widest text-zinc-500 uppercase">
-        <div class="flex items-center gap-3">
-          <span class="inline-block w-2 h-2 border border-accent-terminal bg-accent-terminal/20 animate-telemetry-ping"></span>
-          <span>SYS.CONSOLE: OPERATIONAL</span>
-          <span class="text-zinc-800">|</span>
-          <span class="term-only text-accent-terminal">[ACTIVE_SANDBOX]</span>
-          <span class="exec-only text-zinc-400">[EXEC_SECURE]</span>
-        </div>
-        <div class="flex items-center gap-6">
-          <span class="hidden md:inline">NODE_IP: 127.0.0.1 // DEV_PORT: 4321</span>
-          <span class="hidden sm:inline text-zinc-700">|</span>
-          <span>UPTIME: 153.24H</span>
-        </div>
-      </div>
-
-      <!-- Core Grid Component: Header Navigation -->
-      <div class="border-b border-border-console">
-        <Header />
-      </div>
-
-      <!-- Exposed Main Controls Grid Matrix -->
-      <div class="flex-grow flex flex-col lg:grid lg:grid-cols-12 gap-0">
-        
-        <!-- Left Sidebar Telemetry Info Block (Collapsible/Hidden on small viewports) -->
-        <aside class="lg:col-span-2 border-b lg:border-b-0 lg:border-r border-border-console p-6 space-y-6 font-mono text-[10px] tracking-wider text-zinc-500 uppercase flex flex-row lg:flex-col justify-between lg:justify-start flex-wrap gap-4">
-          <div class="space-y-1.5 w-full">
-            <span class="text-zinc-600 block">// COORDINATES</span>
-            <span class="text-white block font-bold">LAT: 22.0573 N</span>
-            <span class="text-white block font-bold">LNG: 82.1582 E</span>
-          </div>
-
-          <div class="space-y-1.5 w-full">
-            <span class="text-zinc-600 block">// ECOLOGY_PILLAR</span>
-            <span class="text-accent-terminal block font-bold">🐇 Nenii Babuu</span>
-            <span class="text-zinc-400 block">VEGETARIAN_SYNC</span>
-          </div>
-
-          <div class="space-y-1.5 w-full">
-            <span class="text-zinc-600 block">// HOROLOGY_FREQUENCY</span>
-            <span class="text-white block font-bold">28,800 BEAT/H</span>
-            <span class="text-zinc-400 block">SEIKO_PRESAGE_4R35</span>
-          </div>
-        </aside>
-
-        <!-- Dynamic Content Canvas Area -->
-        <main class="lg:col-span-10 p-6 sm:p-10 flex flex-col justify-start">
-          <slot />
-        </main>
-      </div>
-
-      <!-- Core Grid Component: Global Ecosystem Footer Matrix -->
-      <div class="border-t border-border-console">
-        <Footer />
-      </div>
-      
+  <body>
+    <div class="site-shell">
+      <Header />
+      <main>
+        <slot />
+      </main>
+      <Footer />
     </div>
-
-    <!-- Client-Side System State Matrix Toggle Script -->
     <script>
-      const switcherBtn = document.getElementById('state-switcher');
-      if (switcherBtn) {
-        switcherBtn.addEventListener('click', () => {
-          const isExec = document.documentElement.classList.contains('state-exec');
-          const nextState = isExec ? 'term' : 'exec';
-          
-          document.documentElement.className = nextState === 'exec' ? 'state-exec' : 'state-term';
-          localStorage.setItem('system-state', nextState);
-          
-          // Re-render telemetry status pips or indicators
-          const stateLabel = document.getElementById('active-state-label');
-          if (stateLabel) {
-            stateLabel.textContent = nextState.toUpperCase();
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!reducedMotion) {
+        const revealTargets = [...document.querySelectorAll('main > section, main > article, .site-footer')];
+        const initialViewport = window.innerHeight * 0.9;
+        const revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+
+        revealTargets.forEach((target) => {
+          if (target.getBoundingClientRect().top < initialViewport) {
+            target.classList.add('is-revealed');
+          } else {
+            revealObserver.observe(target);
           }
         });
+
+        document.documentElement.classList.add('motion-ready');
+
+        const parallaxLayers = [...document.querySelectorAll('[data-parallax]')];
+        let framePending = false;
+
+        const updateParallax = () => {
+          const viewportCenter = window.innerHeight / 2;
+          parallaxLayers.forEach((layer) => {
+            const speed = Number(layer.getAttribute('data-parallax')) || 0;
+            const bounds = layer.getBoundingClientRect();
+            const distance = viewportCenter - (bounds.top + bounds.height / 2);
+            const offset = Math.max(-72, Math.min(72, distance * speed));
+            layer.style.setProperty('--parallax-offset', `${Math.round(offset)}px`);
+          });
+          framePending = false;
+        };
+
+        const requestParallaxUpdate = () => {
+          if (!framePending) {
+            framePending = true;
+            window.requestAnimationFrame(updateParallax);
+          }
+        };
+
+        updateParallax();
+        window.addEventListener('scroll', requestParallaxUpdate, { passive: true });
+        window.addEventListener('resize', requestParallaxUpdate);
       }
     </script>
   </body>

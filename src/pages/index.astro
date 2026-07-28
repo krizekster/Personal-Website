@@ -1,203 +1,114 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Card from '../components/Card.astro';
 import { getCollection } from 'astro:content';
 
-// Query latest articles and sort by pubDate descending
 const allArticles = await getCollection('feed');
 const latestArticles = allArticles
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
 ---
 
-<BaseLayout>
-  <!-- Brutalist Industrial Hero Console Section -->
-  <section class="relative py-12 md:py-20 border-b border-border-console overflow-hidden">
-    <!-- exposed grid background -->
-    <div class="absolute inset-0 grid-bg-tactile opacity-20 z-0"></div>
+<BaseLayout
+  title="Krize Kster — Engineer, Founder & Writer"
+  description="The personal website of Krize Kster: thoughtful digital products, ventures, and writing."
+>
+  <section class="relative mx-auto min-h-[min(53rem,calc(100svh-5.7rem))] max-w-[1560px] overflow-hidden rounded-[2rem] bg-paper-deep px-5 pb-8 pt-5 sm:px-8 lg:min-h-[46rem]">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_52%_40%,rgba(255,255,255,.85),transparent_24rem),linear-gradient(135deg,#f7f7f1_0%,#e4e9df_100%)]"></div>
+    <div data-parallax="-0.1" class="absolute left-[6%] top-[18%] h-36 w-36 rounded-full border border-sage/20 sm:h-52 sm:w-52"></div>
+    <div data-parallax="0.13" class="absolute bottom-[12%] right-[8%] h-20 w-20 rounded-full bg-[#cdd8c7] opacity-70 sm:h-36 sm:w-36"></div>
 
-    <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-      <!-- High-Density Typographic Core -->
-      <div class="lg:col-span-7 space-y-6">
-        <div class="inline-flex items-center gap-2 border border-border-console px-3 py-1 bg-black">
-          <span class="w-1.5 h-1.5 bg-accent-terminal rounded-none animate-pulse"></span>
-          <span class="text-[9px] font-mono tracking-widest text-zinc-400">ARCHITECT.CONSOLE // SYS.ROOT // ID_001</span>
-        </div>
-
-        <h1 class="text-4xl sm:text-5xl md:text-7xl font-display font-black tracking-tighter leading-none text-white uppercase">
-          KRIZEKSTER<br/>
-          <span class="text-gradient-terminal font-black">SYSTEM_SYNTH.</span>
-        </h1>
-
-        <p class="text-zinc-400 text-xs sm:text-sm font-sans leading-relaxed max-w-xl">
-          Authorized digital terminal of <strong class="text-white">Krishna Soni (Krizekster)</strong>. CS Engineer, Inducted Anthropic Ecosystem Partner, and Statistical Unicorn executing at the critical convergence of high-availability corporate backends and custom modular frontend systems.
-        </p>
-
-        <!-- Technical Action Terminal Row -->
-        <div class="flex flex-wrap gap-4 pt-4 font-mono">
-          <a href="/ventures" class="border border-white px-5 py-3 bg-white text-black text-xs font-bold hover:bg-transparent hover:text-white transition-colors duration-300">
-            [EXECUTE // SHOWCASE]
-          </a>
-          <a href="/about" class="border border-border-console px-5 py-3 bg-black text-xs text-zinc-300 hover:border-accent-terminal hover:text-white transition-all duration-300">
-            [READ // PHILOSOPHY]
-          </a>
-        </div>
+    <div class="relative z-10 flex h-full min-h-[inherit] flex-col justify-between">
+      <div class="flex items-start justify-between gap-4">
+        <p class="eyebrow max-w-[13rem] leading-relaxed">Independent engineer<br class="hidden sm:block" /> &amp; product thinker</p>
+        <p class="hidden max-w-[13rem] text-right text-sm leading-relaxed text-ink-soft lg:block">Building enduring digital products through clarity, curiosity, and a systems point of view.</p>
       </div>
 
-      <!-- Cinematic exposed wireframe Grid illustration -->
-      <div class="lg:col-span-5 flex justify-center lg:justify-end">
-        <div class="relative w-72 h-72 sm:w-80 sm:h-80 border border-border-console bg-black flex items-center justify-center p-6 shadow-2xl group overflow-hidden">
-          
-          <!-- Outer Brutalist Tick Marks -->
-          <span class="absolute top-2 left-2 text-[8px] font-mono text-zinc-700 font-bold">SEC_01 // COR_Y2</span>
-          <span class="absolute top-2 right-2 text-[8px] font-mono text-zinc-700 font-bold">GRID.SYS</span>
-          <span class="absolute bottom-2 left-2 text-[8px] font-mono text-zinc-700 font-bold">COORD // 22.05 N</span>
-          <span class="absolute bottom-2 right-2 text-[8px] font-mono text-zinc-700 font-bold">82.15 E</span>
+      <div data-parallax="0.035" class="pointer-events-none absolute inset-x-0 bottom-0 top-[7%] z-0 flex flex-col justify-center font-display text-[clamp(4.65rem,14.2vw,14.8rem)] font-extrabold leading-[.69] tracking-[-.12em] text-sage-deep sm:leading-[.73]">
+        <span class="pl-[.02em]">KRIZE</span>
+        <span class="self-end pr-[.03em]">KSTER</span>
+      </div>
 
-          <!-- exposed coordinate radar grid -->
-          <svg class="w-full h-full text-zinc-800/80 group-hover:text-accent-terminal/20 transition-colors duration-500 absolute" viewBox="0 0 100 100">
-            <!-- Grid Lines -->
-            <line x1="0" y1="50" x2="100" y2="50" stroke="currentColor" stroke-width="0.5" />
-            <line x1="50" y1="0" x2="50" y2="100" stroke="currentColor" stroke-width="0.5" />
-            <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="1 3" />
-            <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" stroke-width="0.5" />
-            <circle cx="50" cy="50" r="10" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="4 4" />
-            
-            <!-- Target Box rotating -->
-            <rect x="35" y="35" width="30" height="30" fill="none" stroke="currentColor" stroke-width="0.75" class="animate-gear-rotate origin-center" />
-          </svg>
+      <div data-parallax="-0.055" class="pointer-events-none absolute inset-x-0 bottom-44 z-10 flex h-[93%] justify-center sm:bottom-0">
+        <img src="/krizek-kster-portrait.png" alt="" class="h-auto w-[155vw] max-w-none self-end object-contain object-bottom sm:w-[min(78vw,920px)]" />
+      </div>
 
-          <!-- Core telemetry readouts -->
-          <div class="relative z-10 w-28 h-28 border border-accent-terminal/40 bg-black flex flex-col items-center justify-center text-center p-4">
-            <span class="text-[8px] font-mono text-zinc-500 tracking-wider">REF_FREQUENCY</span>
-            <span class="text-sm font-mono font-bold text-accent-terminal tracking-widest animate-pulse">4.00 HZ</span>
-            <span class="text-[8px] font-mono text-zinc-400 mt-1.5 uppercase">// TEMP_OK //</span>
-          </div>
+      <div class="relative z-10 mt-auto grid grid-cols-1 items-end gap-5 sm:grid-cols-2">
+        <p class="max-w-[17rem] text-sm leading-relaxed text-ink sm:text-base">A portfolio for Krize Kster — software, ventures, and ideas made with real-world usefulness in mind.</p>
+        <div class="flex items-end justify-between gap-4 sm:justify-self-end">
+          <a href="#about" class="button button-dark">Explore the work <span aria-hidden="true">↓</span></a>
+          <span class="hidden font-mono text-[.63rem] uppercase tracking-[.1em] text-ink-soft sm:block">Scroll slowly</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- The Ecosystem Matrix Section -->
-  <section class="py-16 border-b border-border-console">
-    <div class="mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-      <div>
-        <span class="text-xs font-mono text-accent-terminal tracking-widest">[01 // ECOSYSTEM_HUB]</span>
-        <h2 class="text-xl sm:text-2xl font-mono font-bold text-white uppercase mt-1">Dual-Track Architecture</h2>
-      </div>
-      <p class="text-zinc-500 text-[10px] font-mono max-w-sm uppercase tracking-widest leading-relaxed">
-        Corporate enterprise pipelines sync dynamically with B2C consumer architectures.
-      </p>
+  <section id="about" class="section-wrap grid gap-10 lg:grid-cols-[.55fr_1fr] lg:gap-20">
+    <div>
+      <p class="eyebrow">01 / About</p>
+      <p class="mt-4 max-w-xs text-sm leading-relaxed text-ink-soft">A considered approach to technology: make it useful, make it clear, and make it last.</p>
     </div>
+    <div>
+      <h1 data-parallax="0.028" class="section-heading">The through-line is thoughtful systems.</h1>
+      <p class="display-copy mt-8 max-w-2xl">Krize brings together engineering, product thinking, and a lasting fascination with how people use technology. The work moves between ambitious digital systems and calmer consumer experiences — always with an eye for the detail that makes something feel considered.</p>
+      <a href="/about" class="text-link mt-8">More about the approach <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
 
-    <!-- Exposed Grid - adjacently aligned cards with gap-0 -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-l border-border-console">
-      <!-- Corporate Track Card -->
-      <div class="border-r border-b border-border-console">
-        <Card 
-          title="KRI ZEK CORP" 
-          tag="B2B // Enterprise" 
-          subtitle="USA // INDIA NODE"
-          accent="blue"
-          hoverGlow={true}
-        >
-          <p class="mb-6 text-xs sm:text-sm font-sans leading-relaxed text-zinc-400">
-            High-availability systems engineering, corporate B2B networks, and secure database clustering. Positioned as an inductee in the **Anthropic Partner Ecosystem** synthesizing LLM state layers with rigid engineering backends.
-          </p>
-          <ul class="space-y-2 mb-6 text-[10px] font-mono text-zinc-500 uppercase">
-            <li class="flex items-center gap-2">
-              <span class="w-1 h-1 bg-accent-terminal"></span>
-              <span>Enterprise Redundancy Pipelines</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <span class="w-1 h-1 bg-accent-terminal"></span>
-              <span>Anthropic AI Scaffold Synthesis</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <span class="w-1 h-1 bg-accent-terminal"></span>
-              <span>Cross-Corridor US/India Engineering</span>
-            </li>
-          </ul>
-          <div slot="footer" class="w-full flex justify-between items-center text-[10px] font-mono">
-            <span class="text-zinc-650">SYS.FILES // B2B_SECURE</span>
-            <a href="/ventures#krizek" class="text-accent-terminal hover:text-white transition-colors">
-              [ENTER_DOSSIER]
-            </a>
-          </div>
-        </Card>
+  <section id="ventures" class="border-y border-line bg-[#e4e9df]">
+    <div class="section-wrap">
+      <div class="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+        <div>
+          <p class="eyebrow">02 / Selected ventures</p>
+          <h2 data-parallax="0.025" class="section-heading mt-3">Building in two directions.</h2>
+        </div>
+        <a href="/ventures" class="text-link shrink-0">See all ventures <span aria-hidden="true">↗</span></a>
       </div>
-
-      <!-- Consumer Product Track Card -->
-      <div class="border-r border-b border-border-console">
-        <Card 
-          title="ALTERED BRILLIANCE" 
-          tag="B2C // Mobile" 
-          subtitle="PRODUCT ECOSYSTEM"
-          accent="green"
-          hoverGlow={true}
-        >
-          <p class="mb-6 text-xs sm:text-sm font-sans leading-relaxed text-zinc-400">
-            Consumer mobile product lines built strictly under **Zero-Bloat & Offline-First manifesto**. Translating clean client sqlite engines and responsive layout structures into high-performance utility software.
-          </p>
-          <ul class="space-y-2 mb-6 text-[10px] font-mono text-zinc-500 uppercase">
-            <li class="flex items-center gap-2">
-              <span class="w-1 h-1 bg-accent-terminal"></span>
-              <span>Offline-First Sqlite Hydration</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <span class="w-1 h-1 bg-accent-terminal"></span>
-              <span>Tactile React Native Layouts</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <span class="w-1 h-1 bg-accent-terminal"></span>
-              <span>Zero telemetry tracking bloat</span>
-            </li>
-          </ul>
-          <div slot="footer" class="w-full flex justify-between items-center text-[10px] font-mono">
-            <span class="text-zinc-650">SYS.FILES // B2C_STABLE</span>
-            <a href="/ventures#altered-brilliance" class="text-accent-terminal hover:text-white transition-colors">
-              [ENTER_DOSSIER]
-            </a>
+      <div class="mt-12 grid gap-5 md:grid-cols-2">
+        <article class="project-card bg-[#31433a] text-paper">
+          <div>
+            <p class="eyebrow text-mist">01 / Enterprise</p>
+            <h3 class="mt-5 text-[clamp(3rem,5vw,5.6rem)] font-extrabold leading-[.82] tracking-[-.09em]">KRI<br />ZEK</h3>
           </div>
-        </Card>
+          <div class="max-w-sm">
+            <p class="text-base leading-relaxed text-mist">Technology ventures and systems work for organisations with complex, high-stakes problems.</p>
+            <a href="/ventures#krizek" class="text-link mt-6">Explore KRI ZEK <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+        <article class="project-card bg-[#f8f8f2] text-ink">
+          <div>
+            <p class="eyebrow">02 / Consumer products</p>
+            <h3 class="mt-5 text-[clamp(3rem,5vw,5.6rem)] font-extrabold leading-[.82] tracking-[-.09em]">Altered<br />Brilliance</h3>
+          </div>
+          <div class="max-w-sm">
+            <p class="text-base leading-relaxed text-ink-soft">Mobile-first tools shaped around focus, strong interaction design, and less digital clutter.</p>
+            <a href="/ventures#altered-brilliance" class="text-link mt-6">Explore Altered Brilliance <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- Latest Insights / Feed Section -->
-  <section class="py-16">
-    <div class="mb-10 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+  <section id="writing" class="section-wrap">
+    <div class="grid gap-8 md:grid-cols-[.65fr_1fr] md:gap-20">
       <div>
-        <span class="text-xs font-mono text-accent-terminal tracking-widest">[02 // DIGITAL_GARDEN]</span>
-        <h2 class="text-xl sm:text-2xl font-mono font-bold text-white uppercase mt-1">Knowledge Archive Logs</h2>
+        <p class="eyebrow">03 / Notes &amp; writing</p>
+        <h2 data-parallax="0.03" class="section-heading mt-3">Things worth thinking through.</h2>
+        <p class="mt-6 max-w-sm text-sm leading-relaxed text-ink-soft">Notes on building software, systems, products, games, and the wider ideas behind them.</p>
+        <a href="/feed" class="button button-dark mt-8">Read the journal <span aria-hidden="true">↗</span></a>
       </div>
-      <a href="/feed" class="text-xs font-mono text-zinc-400 hover:text-accent-terminal transition-colors">
-        [VIEW_ALL_LOGS]
-      </a>
-    </div>
-
-    <!-- Feed exposed grid loop - adjacent blocks with gap-0 -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-l border-border-console">
-      {latestArticles.map((article) => (
-        <div class="border-r border-b border-border-console">
-          <Card 
-            title={article.data.title}
-            tag={article.data.category}
-            subtitle={article.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })}
-            accent={article.data.category === 'Engineering' ? 'blue' : article.data.category === 'Ventures' ? 'green' : 'steel'}
-          >
-            <p class="text-xs text-zinc-400 leading-relaxed mb-6 line-clamp-3">
-              {article.data.description}
-            </p>
-            <div slot="footer" class="w-full flex justify-between items-center text-[10px] font-mono">
-              <span class="text-zinc-600">{article.data.telemetryCode}</span>
-              <a href={`/feed/${article.id}`} class="text-accent-terminal hover:text-white transition-colors">
-                [READ_ENTRY]
-              </a>
+      <div>
+        {latestArticles.map((article, index) => (
+          <article class="editorial-card">
+            <div class="flex justify-between gap-4 font-mono text-[.64rem] uppercase tracking-[.08em] text-ink-soft">
+              <span>0{index + 1} / {article.data.category}</span>
+              <span>{article.data.readTime}</span>
             </div>
-          </Card>
-        </div>
-      ))}
+            <h3 class="mt-8 max-w-xl text-[clamp(1.7rem,3.2vw,3rem)] font-bold leading-[.96] tracking-[-.07em]">{article.data.title}</h3>
+            <p class="mt-4 max-w-xl text-sm leading-relaxed text-ink-soft">{article.data.description}</p>
+            <a href={`/feed/${article.id}`} class="text-link mt-7">Read note <span aria-hidden="true">↗</span></a>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 </BaseLayout>
