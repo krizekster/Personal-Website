@@ -32,12 +32,13 @@ This document serves as the single source of truth for tracking **implemented fe
 ---
 
 ### 🟢 Interactive Physics & Motion System ("Dennis Snellenberg Engine")
-- **Engine Script:** [`src/scripts/snellenberg-effects.ts`](file:///z:/Play/Personal%20Website/src/scripts/snellenberg-effects.ts) initialized in [`BaseLayout.astro`](file:///z:/Play/Personal%20Website/src/layouts/BaseLayout.astro).
-- **Magnetic Buttons (`data-magnetic`):** Custom linear interpolation (lerp) engine that pulls interactive pills, CTA buttons, and identity links toward mouse position with inner text offset physics.
-- **Floating Hover Work Preview Modal (`.snellenberg-preview-modal`):** Interactive cursor-following project preview thumbnail overlay with a magnetic action badge ("Explore" / "Read"). Attached to venture cards and journal entries.
+- **Floating Overlay Menu Drawer (`NavDrawer.astro`):** Slide-in dark panel (`#1c1d20`) with dynamic SVG curve edge path (`drawer-svg-curve`) that bows out elastically during open/close transitions via `requestAnimationFrame` lerp loop in `snellenberg-effects.ts`. Triggered by top-right magnetic floating badge button (`Menu`) and equipped with staggered entrance links, active route dot indicators (`.active-route-dot`), magnetic close button ('✕'), and social link directory. Includes body scroll locking (`overflow: hidden`) and `Escape` key handlers.
+- **Centered Hover Work Preview Modal (`.snellenberg-preview-modal`):** Interactive cursor-following project preview thumbnail overlay with a centered magnetic action badge ("DOI" / "View" / "Read") mathematically offset (`translate(-50%, -50%)`) to align directly on the mouse pointer tip. Attached to selected research cards, venture items, and journal entries with full-card click navigation.
+- **Official Links Directory:** Embedded categorized link pills with custom SVG icons across footer, ventures page, and Person JSON-LD schema (LinkedIn Personal, LinkedIn Company, krizek.tech, Play Store app, Crunchbase, Happenstance AI, Instagrams).
+- **Typography & Copy Refinements:** Formatted Kri Zek section heading on Ventures page to **KRI / ZEK** (ALL CAPS across two lines) and updated main footer heading to **Growth Meets Gaming.**.
 - **Kinetic Velocity Marquee (`.kinetic-marquee`):** Infinite horizontal scrolling marquee text banner ("— KRIZE KSTER — INDEPENDENT ENGINEER & PRODUCT THINKER —") that accelerates dynamically with scroll speed.
 - **Curved Section & Footer Arc Transitions (`.rounded-div-wrap`):** Dynamic SVG/CSS rounded top dividers on dark sections and footers that flatten out smoothly as users scroll into view.
-- **Sticky Floating Navigation Badge (`.floating-menu-badge`):** Magnetic floating badge button popping in smoothly past 280px scroll depth for instant top navigation.
+- **Sticky Floating Navigation Badge (`.floating-menu-badge`):** Magnetic floating badge button popping in smoothly past 280px scroll depth for instant top navigation & overlay menu drawer toggle.
 - **Parallax & Reveal System:** Global scroll-reveal via `IntersectionObserver` and depth parallax offsets via `requestAnimationFrame`.
 - **Reduced Motion Safety:** Automatically disables physics calculations when `prefers-reduced-motion: reduce` is detected.
 

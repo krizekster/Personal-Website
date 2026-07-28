@@ -185,10 +185,11 @@ For meaningful future work, append an entry under this heading using:
 - Any follow-up work
 ```
 
-### 2026-07-28 — Dennis Snellenberg Interactive Effects & Asset Fix
-- Corrected hero portrait image asset path to `public/krize-kster-portrait.png`.
-- Implemented custom lerp physics engine in `src/scripts/snellenberg-effects.ts` featuring magnetic buttons, floating work preview modal, kinetic velocity marquee, curved rounded-div footer transition, and floating magnetic navigation badge.
-- Added comprehensive workspace tracking document at `docs/IMPLEMENTATION_STATUS.md`.
+### 2026-07-28 — Overlay Drawer, Centered Cursor Preview & Link Directory
+- Implemented Dennis Snellenberg inspired floating overlay menu drawer (`NavDrawer.astro`) with elastic SVG curve edge bow/spring physics in `snellenberg-effects.ts`.
+- Centered hover preview modal transform on mouse pointer tip (`translate3d(x,y,0) translate(-50%, -50%)`) and wrapped selected research rows in direct DOI links.
+- Added official links directory with custom SVG icons across footer, ventures page, and Person JSON-LD schema.
+- Updated main footer text to "Growth Meets Gaming." and formatted Kri Zek section heading on Ventures page to "KRI / ZEK" (ALL CAPS across two lines).
 
 ## 14. Open decisions
 
