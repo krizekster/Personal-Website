@@ -59,7 +59,7 @@ The current direction takes inspiration from modern editorial portfolios, partic
 
 ### Homepage
 
-- Created a portrait-led hero using `public/krizek-kster-portrait.png`.
+- Created a portrait-led hero using `public/krize-kster-portrait.png`.
 - Updated the hero wordmark to split the name into **KRIZE** and **KSTER**.
 - Added direct pathways to About, Ventures, and Writing.
 - Added featured venture cards for KRI ZEK and Altered Brilliance.
@@ -102,7 +102,7 @@ The current direction takes inspiration from modern editorial portfolios, partic
 - **Framework:** Astro 6, static output.
 - **Styling:** Tailwind CSS 4 plus custom global CSS components and tokens.
 - **Content:** Astro content collection using Markdown in `src/content/feed/`.
-- **Image asset:** Transparent portrait at `public/krizek-kster-portrait.png`.
+- **Image asset:** Transparent portrait at `public/krize-kster-portrait.png`.
 - **No runtime database or authentication dependency.**
 
 ### Important implementation files
