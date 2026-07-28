@@ -77,6 +77,12 @@ The current direction takes inspiration from modern editorial portfolios, partic
 
 - Added a global reveal-on-scroll system for page sections and the footer.
 - Added subtle parallax offsets to selected high-impact visual elements: hero wordmark, portrait, decorative shapes, editorial headings, venture headings, book cover, and footer heading.
+- Built custom Dennis Snellenberg interactive physics engine (`src/scripts/snellenberg-effects.ts`):
+  - Magnetic pull physics (`data-magnetic`) on pills, CTA buttons, and identity links.
+  - Floating cursor-following thumbnail preview modal (`.snellenberg-preview-modal`) with magnetic action badges for project cards and writing items.
+  - Kinetic scroll velocity horizontal marquee banner (`.kinetic-marquee`).
+  - Curved SVG/CSS arc section dividers (`.rounded-div-wrap`) at top of dark section/footer that flatten dynamically on scroll.
+  - Sticky floating magnetic menu badge (`.floating-menu-badge`) popping in after 280px scroll depth.
 - Uses `requestAnimationFrame` and passive scroll listeners to keep scrolling smooth.
 - Motion automatically disables when the visitor prefers reduced motion.
 
@@ -178,6 +184,11 @@ For meaningful future work, append an entry under this heading using:
 - Why it changed
 - Any follow-up work
 ```
+
+### 2026-07-28 — Dennis Snellenberg Interactive Effects & Asset Fix
+- Corrected hero portrait image asset path to `public/krize-kster-portrait.png`.
+- Implemented custom lerp physics engine in `src/scripts/snellenberg-effects.ts` featuring magnetic buttons, floating work preview modal, kinetic velocity marquee, curved rounded-div footer transition, and floating magnetic navigation badge.
+- Added comprehensive workspace tracking document at `docs/IMPLEMENTATION_STATUS.md`.
 
 ## 14. Open decisions
 

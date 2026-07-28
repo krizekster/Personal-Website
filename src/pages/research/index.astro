@@ -1,0 +1,231 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const allResearch = await getCollection('research');
+const sortedResearch = allResearch.sort((a, b) => a.data.order - b.data.order);
+
+const cognitiveVectors = [
+  { id: 1, name: 'Problem-solving', weight: 20 },
+  { id: 2, name: 'Pattern recognition', weight: 18 },
+  { id: 3, name: 'Cognitive flexibility', weight: 16 },
+  { id: 4, name: 'System management', weight: 12 },
+  { id: 5, name: 'Reflex action', weight: 11 },
+  { id: 6, name: 'Emotional depth and resilience', weight: 9 },
+  { id: 7, name: 'Memory index', weight: 8 },
+  { id: 8, name: 'Mood index', weight: 6 },
+];
+
+const title = "Research — Krize Kster";
+const description = "Peer-reviewed and preprint research on gaming, cognition, and behavioral telemetry by Krishna Soni. Springer LNEE and Zenodo publications.";
+---
+
+<BaseLayout title={title} description={description}>
+  <head slot="head">
+    <!-- Google Scholar Meta Tags -->
+    {sortedResearch.map((item) => (
+      item.data.doi && (
+        <>
+          <meta name="citation_title" content={item.data.title} />
+          <meta name="citation_author" content="Krishna Soni" />
+          <meta name="citation_doi" content={item.data.doi} />
+          {item.data.date && <meta name="citation_publication_date" content={item.data.date.toISOString().split('T')[0]} />}
+        </>
+      )
+    ))}
+
+    <!-- JSON-LD ScholarlyArticle Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify(
+      sortedResearch.map((item) => ({
+        "@context": "https://schema.org",
+        "@type": "ScholarlyArticle",
+        "headline": item.data.title,
+        "name": item.data.title,
+        "author": {
+          "@type": "Person",
+          "name": "Krishna Soni",
+          "alternateName": "Krizekster",
+          "url": "https://krizek.tech"
+        },
+        "description": item.data.abstract,
+        ...(item.data.doi && {
+          "identifier": `https://doi.org/${item.data.doi}`,
+          "sameAs": `https://doi.org/${item.data.doi}`
+        }),
+        "publisher": {
+          "@type": "Organization",
+          "name": item.data.venue
+        }
+      }))
+    )} />
+  </head>
+
+  <!-- Framing Header Section (No Parallax) -->
+  <section class="page-hero">
+    <p class="eyebrow">Research / 02</p>
+    <h1 class="mt-4">Gameplay is the largest untapped record of how humans think.</h1>
+    <p class="mt-6">
+      Three point three billion people generate high-resolution behavioral data every day, and the industry discards it as engagement exhaust. These papers are the argument for taking it seriously: the neuroscience underneath, the algorithm that reads it, and the case that it is the training data general intelligence is missing.
+    </p>
+    <div class="mt-6 flex items-center gap-3 font-mono text-xs text-ink-soft">
+      <span>Published as <strong>Krishna Soni</strong>.</span>
+      <span>•</span>
+      <span>Correspondence: <a href="mailto:admin@krizek.tech" class="text-link">admin@krizek.tech</a></span>
+    </div>
+
+    <!-- Pull Quote -->
+    <blockquote class="mt-10 rounded-2xl border-l-4 border-sage bg-paper-deep/60 p-6 text-lg italic leading-relaxed text-ink">
+      “The user-interface boundary is not a screen. It is a permeable membrane where cognitive siphoning occurs.”
+      <cite class="mt-2 block font-mono text-xs not-italic text-ink-soft">— The tGiX™ Algorithm, section 1</cite>
+    </blockquote>
+  </section>
+
+  <!-- Indexed Editorial Bibliography Section -->
+  <section class="section-wrap border-t border-line">
+    <div class="flex items-end justify-between">
+      <div>
+        <p class="eyebrow">Bibliography</p>
+        <h2 class="section-heading mt-2">Publications &amp; Preprints</h2>
+      </div>
+      <p class="font-mono text-xs uppercase tracking-wider text-ink-soft">{sortedResearch.length} Entries</p>
+    </div>
+
+    <div class="mt-10 space-y-8">
+      {sortedResearch.map((entry, idx) => {
+        const doiUrl = entry.data.doi ? `https://doi.org/${entry.data.doi}` : null;
+        const citationText = `${entry.data.authors.join(', ')}. "${entry.data.title}". ${entry.data.venue}${entry.data.venueDetail ? ` (${entry.data.venueDetail})` : ''}.${entry.data.doi ? ` DOI: https://doi.org/${entry.data.doi}` : ''}`;
+
+        return (
+          <article class="editorial-card group transition-all" data-preview-image="/krize-kster-portrait.png" data-preview-label={doiUrl ? "Read DOI" : "Paper"}>
+            <div class="grid gap-4 md:grid-cols-[4rem_1fr_auto] md:items-start">
+              <span class="font-mono text-xs font-bold text-sage-deep">0{idx + 1}</span>
+              <div>
+                <div class="flex flex-wrap items-center gap-3 font-mono text-[.66rem] uppercase tracking-wider text-ink-soft">
+                  <span class="rounded bg-paper-deep px-2 py-0.5 font-bold text-ink">{entry.data.status}</span>
+                  <span>{entry.data.venue} {entry.data.venueDetail && `— ${entry.data.venueDetail}`}</span>
+                  {entry.data.date && <span>({new Date(entry.data.date).getFullYear()})</span>}
+                </div>
+                <h3 class="mt-3 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+                  {entry.data.title}
+                </h3>
+                {entry.data.subtitle && (
+                  <p class="mt-1 text-sm font-medium text-ink-soft">{entry.data.subtitle}</p>
+                )}
+                <p class="mt-3 text-sm leading-relaxed text-ink-soft">{entry.data.abstract}</p>
+                <div class="mt-3 rounded-lg bg-paper-deep/40 p-3 text-xs text-ink">
+                  <strong>Contribution:</strong> {entry.data.contribution}
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-2 sm:items-end">
+                {doiUrl ? (
+                  <a
+                    href={doiUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="button button-dark shrink-0"
+                    data-magnetic
+                    data-magnetic-strength="0.3"
+                  >
+                    <span class="magnetic-text">DOI ↗</span>
+                  </a>
+                ) : (
+                  <span class="rounded-full border border-line px-3 py-1 font-mono text-xs text-ink-soft">
+                    Working Paper
+                  </span>
+                )}
+                <button
+                  type="button"
+                  class="cite-btn text-link font-mono text-[.68rem] text-ink-soft hover:text-ink cursor-pointer"
+                  data-citation={citationText}
+                >
+                  Copy Citation 📋
+                </button>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- Section: The Eight Cognitive Vectors (Pure CSS Animated Figure) -->
+  <section class="border-t border-line bg-[#e4e9df] py-16">
+    <div class="section-wrap">
+      <div>
+        <p class="eyebrow">tGiX™ Architecture</p>
+        <h2 class="section-heading mt-2">The Eight Cognitive Vectors</h2>
+        <p class="display-copy mt-4 max-w-2xl">
+          The tGiX™ algorithm resolves high-frequency interaction telemetry across eight weighted cognitive channels into a unified composite metric.
+        </p>
+      </div>
+
+      <div class="mt-12 rounded-2xl border border-line bg-paper p-6 sm:p-10">
+        <div class="space-y-6">
+          {cognitiveVectors.map((vec, idx) => (
+            <div class="vector-row group" style={`--row-delay: ${idx * 60}ms`}>
+              <div class="flex items-center justify-between text-sm font-semibold">
+                <span class="flex items-center gap-3">
+                  <span class="font-mono text-xs font-bold text-sage-deep">0{vec.id}</span>
+                  <span>{vec.name}</span>
+                </span>
+                <span class="font-mono text-sm font-bold tabular-nums text-ink">{vec.weight}</span>
+              </div>
+              <div class="mt-2 h-3.5 w-full overflow-hidden rounded-full bg-paper-deep">
+                <div
+                  class="vector-bar h-full rounded-full bg-sage-deep"
+                  style={`width: ${vec.weight * 4}%;`}
+                ></div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p class="mt-8 border-t border-line pt-4 text-center font-mono text-xs text-ink-soft">
+          <em>Fig. 1 — The eight cognitive vectors. Weights sum to 100 and resolve into the Altered Quotient, 0.00 to 100.00.</em>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .vector-bar {
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--row-delay, 0ms);
+  }
+
+  :global(.is-revealed) .vector-bar {
+    transform: scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vector-bar {
+      transform: scaleX(1) !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const citeBtns = document.querySelectorAll('.cite-btn');
+    citeBtns.forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const text = (btn as HTMLElement).dataset.citation;
+        if (text) {
+          try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.textContent;
+            btn.textContent = 'Copied! ✓';
+            setTimeout(() => {
+              btn.textContent = originalText;
+            }, 2000);
+          } catch (err) {
+            console.error('Failed to copy citation:', err);
+          }
+        }
+      });
+    });
+  });
+</script>

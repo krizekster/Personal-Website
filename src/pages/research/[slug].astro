@@ -1,0 +1,70 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const researchEntries = await getCollection('research');
+  return researchEntries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const doiUrl = entry.data.doi ? `https://doi.org/${entry.data.doi}` : null;
+const pageTitle = `${entry.data.title} — Research by Krishna Soni`;
+---
+
+<BaseLayout title={pageTitle} description={entry.data.abstract}>
+  <head slot="head">
+    {entry.data.doi && (
+      <>
+        <meta name="citation_title" content={entry.data.title} />
+        <meta name="citation_author" content="Krishna Soni" />
+        <meta name="citation_doi" content={entry.data.doi} />
+        {entry.data.date && <meta name="citation_publication_date" content={entry.data.date.toISOString().split('T')[0]} />}
+      </>
+    )}
+  </head>
+
+  <article class="page-hero max-w-4xl">
+    <div class="flex items-center gap-3 font-mono text-xs text-sage-deep">
+      <a href="/research" class="text-link">← Back to Research</a>
+      <span>/</span>
+      <span class="uppercase">{entry.data.status}</span>
+    </div>
+
+    <h1 class="mt-6 text-4xl font-extrabold tracking-tight sm:text-6xl">{entry.data.title}</h1>
+    {entry.data.subtitle && <p class="mt-2 text-xl font-medium text-ink-soft">{entry.data.subtitle}</p>}
+
+    <div class="mt-6 flex flex-wrap items-center gap-4 border-y border-line py-4 font-mono text-xs text-ink-soft">
+      <div>Author: <strong>{entry.data.authors.join(', ')}</strong></div>
+      <div>Venue: <strong>{entry.data.venue} {entry.data.venueDetail && `(${entry.data.venueDetail})`}</strong></div>
+      {entry.data.date && <div>Date: <strong>{new Date(entry.data.date).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</strong></div>}
+    </div>
+
+    <div class="mt-8 rounded-2xl border border-line bg-paper-deep/50 p-6">
+      <h2 class="font-mono text-xs uppercase tracking-wider text-sage-deep">Abstract</h2>
+      <p class="mt-2 text-base leading-relaxed text-ink">{entry.data.abstract}</p>
+    </div>
+
+    <div class="mt-6 rounded-2xl bg-sage-deep text-paper p-6">
+      <h2 class="font-mono text-xs uppercase tracking-wider text-mist">Core Contribution</h2>
+      <p class="mt-2 text-base font-semibold">{entry.data.contribution}</p>
+    </div>
+
+    {doiUrl && (
+      <div class="mt-8">
+        <a href={doiUrl} target="_blank" rel="noopener noreferrer" class="button button-dark" data-magnetic data-magnetic-strength="0.35">
+          <span class="magnetic-text">Read Official DOI Publication ↗</span>
+        </a>
+      </div>
+    )}
+
+    <div class="prose mt-12 border-t border-line pt-10">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

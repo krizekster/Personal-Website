@@ -16,6 +16,27 @@ const feedCollection = defineCollection({
   }),
 });
 
+const researchCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/research" }),
+  schema: z.object({
+    title: z.string(),
+    subtitle: z.string().optional(),
+    authors: z.array(z.string()).default(['Krishna Soni']),
+    venue: z.string(),
+    venueDetail: z.string().optional(),
+    status: z.enum(['peer-reviewed', 'preprint', 'working-paper']),
+    date: z.coerce.date().optional(),
+    doi: z.string().optional(),
+    url: z.string().url().optional(),
+    abstract: z.string(),
+    contribution: z.string(),
+    keywords: z.array(z.string()).default([]),
+    featured: z.boolean().default(false),
+    order: z.number(),
+  }),
+});
+
 export const collections = {
   feed: feedCollection,
+  research: researchCollection,
 };

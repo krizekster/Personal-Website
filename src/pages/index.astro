@@ -6,6 +6,11 @@ const allArticles = await getCollection('feed');
 const latestArticles = allArticles
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
+
+const featuredResearch = (await getCollection('research'))
+  .filter((r) => r.data.doi)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
 ---
 
 <BaseLayout
@@ -33,14 +38,44 @@ const latestArticles = allArticles
       </div>
 
       <div class="relative z-10 mt-auto grid grid-cols-1 items-end gap-5 sm:grid-cols-2">
-        <p class="max-w-[17rem] text-sm leading-relaxed text-ink sm:text-base">A portfolio for Krize Kster — software, ventures, and ideas made with real-world usefulness in mind.</p>
+        <p class="max-w-[22rem] text-sm leading-relaxed text-ink sm:text-base">I wrote the book on why games change us, published the research behind it, and built tGiX™, the algorithm that turns play telemetry into a measurable cognitive index.</p>
         <div class="flex items-end justify-between gap-4 sm:justify-self-end">
-          <a href="#about" class="button button-dark">Explore the work <span aria-hidden="true">↓</span></a>
+          <a href="#about" class="button button-dark" data-magnetic data-magnetic-strength="0.35"><span class="magnetic-text">Explore the work <span aria-hidden="true">↓</span></span></a>
           <span class="hidden font-mono text-[.63rem] uppercase tracking-[.1em] text-ink-soft sm:block">Scroll slowly</span>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Kinetic Marquee Banner -->
+  <div class="kinetic-marquee">
+    <div class="marquee-track">
+      <div class="marquee-item">
+        <span>Krize Kster</span>
+        <span class="marquee-dot"></span>
+        <span>Krishna Soni</span>
+        <span class="marquee-dot"></span>
+        <span>tGiX™ Algorithm</span>
+        <span class="marquee-dot"></span>
+        <span>KRI ZEK</span>
+        <span class="marquee-dot"></span>
+        <span>Altered Brilliance</span>
+        <span class="marquee-dot"></span>
+      </div>
+      <div class="marquee-item">
+        <span>Krize Kster</span>
+        <span class="marquee-dot"></span>
+        <span>Krishna Soni</span>
+        <span class="marquee-dot"></span>
+        <span>tGiX™ Algorithm</span>
+        <span class="marquee-dot"></span>
+        <span>KRI ZEK</span>
+        <span class="marquee-dot"></span>
+        <span>Altered Brilliance</span>
+        <span class="marquee-dot"></span>
+      </div>
+    </div>
+  </div>
 
   <section id="about" class="section-wrap grid gap-10 lg:grid-cols-[.55fr_1fr] lg:gap-20">
     <div>
@@ -49,8 +84,48 @@ const latestArticles = allArticles
     </div>
     <div>
       <h1 data-parallax="0.028" class="section-heading">The through-line is thoughtful systems.</h1>
-      <p class="display-copy mt-8 max-w-2xl">Krize brings together engineering, product thinking, and a lasting fascination with how people use technology. The work moves between ambitious digital systems and calmer consumer experiences — always with an eye for the detail that makes something feel considered.</p>
-      <a href="/about" class="text-link mt-8">More about the approach <span aria-hidden="true">↗</span></a>
+      <p class="display-copy mt-8 max-w-2xl">Years spent at the intersection of gaming, neuroscience, and AI: the book, the peer-reviewed research, and the algorithm that turns gameplay into a proprietary cognitive dataset.</p>
+      <a href="/about" class="text-link mt-8" data-magnetic data-magnetic-strength="0.3"><span class="magnetic-text">More about the approach <span aria-hidden="true">↗</span></span></a>
+    </div>
+  </section>
+
+  <!-- Selected Research Block -->
+  <section id="research" class="border-t border-line bg-paper-deep/40 py-16">
+    <div class="section-wrap">
+      <div class="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+        <div>
+          <p class="eyebrow">02 / Selected Research</p>
+          <h2 data-parallax="0.025" class="section-heading mt-3">Quantifying human potential through play.</h2>
+        </div>
+        <a href="/research" class="text-link shrink-0" data-magnetic data-magnetic-strength="0.3"><span class="magnetic-text">Explore all research <span aria-hidden="true">↗</span></span></a>
+      </div>
+
+      <div class="mt-10 space-y-4">
+        {featuredResearch.map((item, idx) => (
+          <a
+            href={`https://doi.org/${item.data.doi}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="editorial-card group block transition-all hover:border-sage-deep/40"
+            data-preview-image="/krize-kster-portrait.png"
+            data-preview-label="DOI"
+          >
+            <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+              <div>
+                <div class="flex items-center gap-3 font-mono text-[.66rem] uppercase tracking-wider text-ink-soft">
+                  <span class="font-bold text-sage-deep">0{idx + 1}</span>
+                  <span>{item.data.venue} {item.data.venueDetail && `— ${item.data.venueDetail}`}</span>
+                </div>
+                <h3 class="mt-2 text-xl font-bold tracking-tight text-ink group-hover:text-sage-deep sm:text-2xl">{item.data.title}</h3>
+                <p class="mt-1 text-sm text-ink-soft">{item.data.contribution}</p>
+              </div>
+              <span class="button button-dark shrink-0" data-magnetic data-magnetic-strength="0.3">
+                <span class="magnetic-text">DOI ↗</span>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -61,27 +136,27 @@ const latestArticles = allArticles
           <p class="eyebrow">02 / Selected ventures</p>
           <h2 data-parallax="0.025" class="section-heading mt-3">Building in two directions.</h2>
         </div>
-        <a href="/ventures" class="text-link shrink-0">See all ventures <span aria-hidden="true">↗</span></a>
+        <a href="/ventures" class="text-link shrink-0" data-magnetic data-magnetic-strength="0.3"><span class="magnetic-text">See all ventures <span aria-hidden="true">↗</span></span></a>
       </div>
       <div class="mt-12 grid gap-5 md:grid-cols-2">
-        <article class="project-card bg-[#31433a] text-paper">
+        <article class="project-card bg-[#31433a] text-paper group" data-preview-image="/krize-kster-portrait.png" data-preview-label="Explore">
           <div>
             <p class="eyebrow text-mist">01 / Enterprise</p>
             <h3 class="mt-5 text-[clamp(3rem,5vw,5.6rem)] font-extrabold leading-[.82] tracking-[-.09em]">KRI<br />ZEK</h3>
           </div>
           <div class="max-w-sm">
             <p class="text-base leading-relaxed text-mist">Technology ventures and systems work for organisations with complex, high-stakes problems.</p>
-            <a href="/ventures#krizek" class="text-link mt-6">Explore KRI ZEK <span aria-hidden="true">↗</span></a>
+            <a href="/ventures#krizek" class="text-link mt-6" data-magnetic data-magnetic-strength="0.35"><span class="magnetic-text">Explore KRI ZEK <span aria-hidden="true">↗</span></span></a>
           </div>
         </article>
-        <article class="project-card bg-[#f8f8f2] text-ink">
+        <article class="project-card bg-[#f8f8f2] text-ink group" data-preview-image="/krize-kster-portrait.png" data-preview-label="Explore">
           <div>
             <p class="eyebrow">02 / Consumer products</p>
             <h3 class="mt-5 text-[clamp(3rem,5vw,5.6rem)] font-extrabold leading-[.82] tracking-[-.09em]">Altered<br />Brilliance</h3>
           </div>
           <div class="max-w-sm">
             <p class="text-base leading-relaxed text-ink-soft">Mobile-first tools shaped around focus, strong interaction design, and less digital clutter.</p>
-            <a href="/ventures#altered-brilliance" class="text-link mt-6">Explore Altered Brilliance <span aria-hidden="true">↗</span></a>
+            <a href="/ventures#altered-brilliance" class="text-link mt-6" data-magnetic data-magnetic-strength="0.35"><span class="magnetic-text">Explore Altered Brilliance <span aria-hidden="true">↗</span></span></a>
           </div>
         </article>
       </div>
@@ -94,18 +169,18 @@ const latestArticles = allArticles
         <p class="eyebrow">03 / Notes &amp; writing</p>
         <h2 data-parallax="0.03" class="section-heading mt-3">Things worth thinking through.</h2>
         <p class="mt-6 max-w-sm text-sm leading-relaxed text-ink-soft">Notes on building software, systems, products, games, and the wider ideas behind them.</p>
-        <a href="/feed" class="button button-dark mt-8">Read the journal <span aria-hidden="true">↗</span></a>
+        <a href="/feed" class="button button-dark mt-8" data-magnetic data-magnetic-strength="0.35"><span class="magnetic-text">Read the journal <span aria-hidden="true">↗</span></span></a>
       </div>
       <div>
         {latestArticles.map((article, index) => (
-          <article class="editorial-card">
+          <article class="editorial-card group" data-preview-image="/krize-kster-portrait.png" data-preview-label="Read">
             <div class="flex justify-between gap-4 font-mono text-[.64rem] uppercase tracking-[.08em] text-ink-soft">
               <span>0{index + 1} / {article.data.category}</span>
               <span>{article.data.readTime}</span>
             </div>
             <h3 class="mt-8 max-w-xl text-[clamp(1.7rem,3.2vw,3rem)] font-bold leading-[.96] tracking-[-.07em]">{article.data.title}</h3>
             <p class="mt-4 max-w-xl text-sm leading-relaxed text-ink-soft">{article.data.description}</p>
-            <a href={`/feed/${article.id}`} class="text-link mt-7">Read note <span aria-hidden="true">↗</span></a>
+            <a href={`/feed/${article.id}`} class="text-link mt-7" data-magnetic data-magnetic-strength="0.3"><span class="magnetic-text">Read note <span aria-hidden="true">↗</span></span></a>
           </article>
         ))}
       </div>

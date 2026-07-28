@@ -4,11 +4,44 @@ import Timeline from '../components/Timeline.astro';
 import Card from '../components/Card.astro';
 ---
 
-<BaseLayout title="About — Krize Kster" description="The ideas, working style, and path behind Krize Kster’s work.">
+<BaseLayout title="About — Krize Kster" description="I'm Krishna Soni, founder and CEO of Kri Zek, working out of Jaipur.">
+  <head slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Krishna Soni",
+      "alternateName": ["Krize Kster", "Krizekster"],
+      "jobTitle": "Founder & CEO",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Kri Zek"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/krizekster/",
+        "https://www.linkedin.com/company/kri-zek",
+        "https://www.krizek.tech/",
+        "https://play.google.com/store/apps/details?id=tech.krizek.alteredbrilliance",
+        "https://www.crunchbase.com/organization/kri-zek-llc",
+        "https://happenstance.ai/u/krizekster",
+        "https://www.instagram.com/krizekster/",
+        "https://www.instagram.com/krizek.tech/",
+        "https://www.instagram.com/krizekindia/",
+        "https://github.com/krizekster",
+        "https://dev.to/krizekster",
+        "https://thepowerofgaming.hashnode.dev"
+      ]
+    })} />
+  </head>
+
   <section class="page-hero">
     <p class="eyebrow">About / 01</p>
-    <h1 data-parallax="0.04">Building with a little more intention.</h1>
-    <p>Krize Kster, known online as Krizekster, is an engineer, founder, and lifelong student of the systems that sit behind good digital experiences. The goal is simple: turn complicated things into products that feel clear, useful, and human.</p>
+    <h1 data-parallax="0.04">Building with intention at the edge of play and cognition.</h1>
+    <div class="prose mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-ink-soft">
+      <p>I'm <strong>Krishna Soni</strong>, founder and CEO of <strong>Kri Zek</strong>, working out of Jaipur.</p>
+      <p>I spent four years as a game developer before starting the company, and the whole time I kept running into the same thing: games are the most sophisticated behavioral instruments ever built, and nobody treats them that way. Every decision inside a game is a projection of the mind making it. How you allocate scarce resources. How fast you abandon a failing strategy. How long it takes you to recover after a loss. Conventional cognitive testing measures none of this well, because the moment someone knows they are being tested, the behavior stops being real.</p>
+      <p>So I wrote the book, published the research, and built the algorithm.</p>
+      <p>Kri Zek runs across two entities, <strong>KRI ZEK LLC</strong> in Delaware and <strong>Krizek India Private Limited</strong> in Jaipur, and the work splits three ways: <em>Altered Brilliance</em> as the product, <em>tGiX™</em> as the measurement layer underneath it, and <em>Codename TGX-1</em> as the model being trained on what that layer collects.</p>
+    </div>
   </section>
 
   <section class="border-y border-line bg-[#e4e9df]">
