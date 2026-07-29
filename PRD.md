@@ -64,7 +64,7 @@ The current direction takes inspiration from modern editorial portfolios, partic
 - Added direct pathways to About, Ventures, and Writing.
 - Added featured venture cards for KRI ZEK and Altered Brilliance.
 - Added a latest-writing section driven by the existing Astro content collection.
-- Added a four-second, full-screen landing preloader on the home route. It shows only a sequence of twelve multilingual greetings, beginning with Hindi “नमस्ते” and ending with Japanese “こんにちは,” on the deep-ink menu color before lifting away to reveal the hero. It replays on a hard refresh, while returning to Home through the site logo does not replay it during the same session.
+- Added a four-second, full-screen landing preloader on the home route. It shows only a sequence of twelve multilingual greetings, beginning with Hindi “नमस्ते” and ending with Japanese “こんにちは,” on the deep-ink menu color. The greeting phase completes before the loader lifts, and the hero fades in only after that lift is complete. It replays on a hard refresh, while returning to Home through the site logo does not replay it during the same session.
 - The loader is decorative to assistive technology and bypasses itself when the visitor uses `prefers-reduced-motion`.
 
 ### Core pages
@@ -85,8 +85,12 @@ The current direction takes inspiration from modern editorial portfolios, partic
   - Kinetic scroll velocity horizontal marquee banner (`.kinetic-marquee`).
   - Curved SVG/CSS arc section dividers (`.rounded-div-wrap`) at top of dark section/footer that flatten dynamically on scroll.
   - Sticky floating magnetic menu badge (`.floating-menu-badge`) popping in after 280px scroll depth.
+- Corrected the floating drawer’s closing state: its SVG curve now resets to a flat edge and the complete overlay becomes invisible after retraction on desktop and mobile.
+- Replaced the oval route handoff with a viewport-covering circular transition, retaining the selected route label at the centre of the circle.
+- Unified the route handoff for navigation links added by the writing search/filter UI, so dynamic and static internal links use the same circular transition.
 - Uses `requestAnimationFrame` and passive scroll listeners to keep scrolling smooth.
 - Motion automatically disables when the visitor prefers reduced motion.
+- The floating menu remains available with a static open/close state when reduced motion is preferred.
 
 ### Responsive behavior
 
@@ -138,6 +142,7 @@ The current direction takes inspiration from modern editorial portfolios, partic
 - Normalized all internal routes to trailing-slash destinations and reset non-anchor route scroll on handoff, preventing an empty route shell from placing the shared footer at the top of the viewport.
 - Removed the global section-hiding reveal layer after it intermittently left route content invisible; parallax, drawer, marquee, and page-handoff motion remain active without obscuring page content.
 - Corrected invalid slotted `<head>` markup on About and Research routes. Metadata now uses Astro `Fragment` slots, keeping route content inside `<main>` and the footer at the document bottom. The home loader fades the landing page in as it lifts away, shows on direct visits and refreshes, and skips only one intentional in-site return to Home.
+- Moved the home loader outside the faded site shell so it remains visible throughout its greeting sequence. Raised and centred the desktop hero composition, normalized child-route active navigation states, and standardized internal trailing-slash links for Cloudflare Pages.
 
 ## 10. Content considerations
 
@@ -200,6 +205,13 @@ For meaningful future work, append an entry under this heading using:
 - Centered hover preview modal transform on mouse pointer tip (`translate3d(x,y,0) translate(-50%, -50%)`) and wrapped selected research rows in direct DOI links.
 - Added official links directory with custom SVG icons across footer, ventures page, and Person JSON-LD schema.
 - Updated main footer text to "Growth Meets Gaming." and formatted Kri Zek section heading on Ventures page to "KRI / ZEK" (ALL CAPS across two lines).
+
+### 2026-07-29 — Landing flow and navigation consistency
+- Raised and centred the desktop home composition while preserving the responsive portrait-led layout.
+- Moved the multilingual loader into an overlay layer outside the faded page shell; it starts with Hindi, ends with Japanese, completes in four seconds, then hands off to the home fade.
+- Fixed the drawer close lifecycle by hiding the inactive root and resetting its SVG curve; verified on desktop and mobile.
+- Replaced the oval route handoff with a full-viewport circle, normalized trailing-slash internal routes, corrected child-route active states, and extended the handoff to dynamically filtered writing links.
+- Rebuilt and verified all fourteen static routes; shared footers render after main content on every generated page.
 
 ## 14. Open decisions
 

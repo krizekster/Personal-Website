@@ -31,6 +31,8 @@ const {
     <slot name="head" />
   </head>
   <body>
+    <slot name="overlay" />
+
     <div class="site-shell" id="top">
       <Header />
       <main>
@@ -40,7 +42,7 @@ const {
     </div>
 
     <!-- Floating Magnetic Navigation Badge / Drawer Trigger -->
-    <button type="button" class="floating-menu-badge cursor-pointer border-none" data-drawer-trigger data-magnetic data-magnetic-strength="0.45" aria-label="Toggle navigation menu">
+    <button type="button" class="floating-menu-badge cursor-pointer border-none" data-drawer-trigger data-magnetic data-magnetic-strength="0.45" aria-controls="nav-drawer" aria-expanded="false" aria-label="Toggle navigation menu">
       <span class="magnetic-text">Menu</span>
     </button>
 

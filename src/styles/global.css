@@ -417,15 +417,18 @@
     position: fixed;
     inset: 0;
     z-index: 99990;
+    visibility: hidden;
     pointer-events: none;
   }
 
   .nav-drawer-root.is-open {
+    visibility: visible;
     pointer-events: auto;
   }
 
   .nav-drawer-root.is-closing {
-    pointer-events: auto;
+    visibility: visible;
+    pointer-events: none;
   }
 
   .drawer-backdrop {
@@ -526,7 +529,7 @@
     display: grid;
     place-items: center;
     overflow: hidden;
-    clip-path: ellipse(0% 0% at 50% 50%);
+    clip-path: circle(0 at 50% 50%);
     background: var(--color-menu-surface);
     color: var(--color-paper);
     pointer-events: none;
@@ -536,11 +539,11 @@
   .page-transition-overlay.is-active { pointer-events: auto; }
 
   .page-transition-overlay.is-covering {
-    clip-path: ellipse(150% 130% at 50% 50%);
+    clip-path: circle(150vmax at 50% 50%);
   }
 
   .page-transition-overlay.is-revealing {
-    clip-path: ellipse(0% 0% at 50% 50%);
+    clip-path: circle(0 at 50% 50%);
   }
 
   .page-transition-overlay__label {
@@ -580,6 +583,11 @@
 
   @media (prefers-reduced-motion: reduce) {
     .page-transition-overlay { display: none; }
+    .floating-menu-badge,
+    .drawer-backdrop,
+    .drawer-panel,
+    .drawer-nav-item,
+    .drawer-footer { transition: none !important; }
   }
 }
 

@@ -39,7 +39,7 @@ const categories = ['ALL', 'Engineering', 'Philosophy', 'Gaming', 'Ventures'];
 
   <div id="articles-list" class="border-t border-line">
     {articles.map((item, index) => (
-      <a href={`/feed/${item.slug}`} class="group grid gap-4 border-b border-line py-7 transition-colors hover:bg-paper/60 sm:grid-cols-[6rem_1fr_auto] sm:items-start sm:px-5">
+      <a href={`/feed/${item.slug}/`} class="group grid gap-4 border-b border-line py-7 transition-colors hover:bg-paper/60 sm:grid-cols-[6rem_1fr_auto] sm:items-start sm:px-5" data-page-transition data-transition-label="Writing">
         <span class="font-mono text-[.64rem] uppercase tracking-[.08em] text-ink-soft">0{index + 1} / {item.pubDate}</span>
         <span>
           <span class="font-mono text-[.64rem] uppercase tracking-[.08em] text-sage-deep">{item.category}</span>
@@ -83,7 +83,7 @@ const categories = ['ALL', 'Engineering', 'Philosophy', 'Gaming', 'Ventures'];
     }
 
     list.innerHTML = filtered.map((article, index) => `
-      <a href="/feed/${encodeURIComponent(article.slug)}" class="group grid gap-4 border-b border-line py-7 transition-colors hover:bg-paper/60 sm:grid-cols-[6rem_1fr_auto] sm:items-start sm:px-5">
+      <a href="/feed/${encodeURIComponent(article.slug)}/" class="group grid gap-4 border-b border-line py-7 transition-colors hover:bg-paper/60 sm:grid-cols-[6rem_1fr_auto] sm:items-start sm:px-5" data-page-transition data-transition-label="Writing">
         <span class="font-mono text-[.64rem] uppercase tracking-[.08em] text-ink-soft">0${index + 1} / ${escapeHtml(article.pubDate)}</span>
         <span>
           <span class="font-mono text-[.64rem] uppercase tracking-[.08em] text-sage-deep">${escapeHtml(article.category)}</span>

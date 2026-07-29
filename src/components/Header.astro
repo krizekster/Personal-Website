@@ -8,7 +8,7 @@ const navItems = [
   { label: 'Book', href: '/the-power-of-gaming/' },
 ];
 
-const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
+const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href));
 ---
 
 <header class="site-header">

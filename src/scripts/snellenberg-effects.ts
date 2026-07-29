@@ -4,7 +4,12 @@ export function initSnellenbergEffects() {
   if (typeof window === 'undefined') return;
 
   const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (isReduced) return;
+  // The drawer remains usable even when decorative motion is disabled.
+  initDrawerController(isReduced);
+  if (isReduced) {
+    document.querySelector<HTMLElement>('.floating-menu-badge')?.classList.add('is-visible');
+    return;
+  }
 
   // 1. Magnetic Elements Physics
   initMagneticElements();
@@ -21,10 +26,7 @@ export function initSnellenbergEffects() {
   // 5. Floating Magnetic Menu Badge
   initFloatingMenuBadge();
 
-  // 6. Dennis Snellenberg Elastic Overlay Drawer
-  initDrawerController();
-
-  // 7. Curved handoff for internal navigation
+  // 6. Curved handoff for internal navigation
   initPageTransitions();
 }
 
@@ -254,7 +256,7 @@ function initFloatingMenuBadge() {
   onScroll();
 }
 
-function initDrawerController() {
+function initDrawerController(reducedMotion = false) {
   const drawer = document.getElementById('nav-drawer');
   if (!drawer) return;
 
@@ -269,23 +271,46 @@ function initDrawerController() {
   let closeTimeoutId: number | null = null;
   const drawerDuration = 650;
 
+  const setTriggerExpanded = (expanded: boolean) => {
+    triggers.forEach((trigger) => trigger.setAttribute('aria-expanded', String(expanded)));
+  };
+
+  const setCurvePath = (curveX: number) => {
+    curvePath?.setAttribute('d', `M100,0 Q${Math.round(curveX)},400 100,800 L100,800 L100,0 Z`);
+  };
+
   const updateSVGPath = () => {
     currentCurveX += (targetCurveX - currentCurveX) * 0.12;
 
-    if (curvePath) {
-      // SVG viewBox height is 800
-      curvePath.setAttribute('d', `M100,0 Q${Math.round(currentCurveX)},400 100,800 L100,800 L100,0 Z`);
-    }
+    // SVG viewBox height is 800.
+    setCurvePath(currentCurveX);
 
     if (Math.abs(targetCurveX - currentCurveX) > 0.1) {
       animFrameId = requestAnimationFrame(updateSVGPath);
     } else {
       currentCurveX = targetCurveX;
-      if (curvePath) {
-        curvePath.setAttribute('d', `M100,0 Q${targetCurveX},400 100,800 L100,800 L100,0 Z`);
-      }
+      setCurvePath(targetCurveX);
       animFrameId = null;
     }
+  };
+
+  const resetCurve = () => {
+    if (animFrameId) {
+      cancelAnimationFrame(animFrameId);
+      animFrameId = null;
+    }
+    currentCurveX = 100;
+    targetCurveX = 100;
+    setCurvePath(100);
+  };
+
+  const finishClose = () => {
+    resetCurve();
+    drawer.classList.remove('is-open', 'is-closing');
+    drawer.setAttribute('aria-hidden', 'true');
+    setTriggerExpanded(false);
+    document.body.style.overflow = '';
+    closeTimeoutId = null;
   };
 
   const openDrawer = () => {
@@ -298,20 +323,34 @@ function initDrawerController() {
     drawer.classList.remove('is-closing');
     drawer.classList.add('is-open');
     drawer.setAttribute('aria-hidden', 'false');
+    setTriggerExpanded(true);
     document.body.style.overflow = 'hidden';
 
     // Elastic bow outwards to the left, then spring back to 100
     currentCurveX = 0;
     targetCurveX = 100;
 
+    if (reducedMotion) {
+      resetCurve();
+      return;
+    }
+
     if (animFrameId) cancelAnimationFrame(animFrameId);
     animFrameId = requestAnimationFrame(updateSVGPath);
   };
 
   const closeDrawer = () => {
-    if (!isOpen) return;
+    if (!isOpen && !drawer.classList.contains('is-open')) return;
 
     isOpen = false;
+
+    drawer.classList.remove('is-open');
+    drawer.classList.add('is-closing');
+
+    if (reducedMotion) {
+      finishClose();
+      return;
+    }
 
     // Reverse the opening bow while the panel retracts so both directions
     // share the same elastic curve rather than snapping back to a flat edge.
@@ -320,17 +359,7 @@ function initDrawerController() {
     if (animFrameId) cancelAnimationFrame(animFrameId);
     animFrameId = requestAnimationFrame(updateSVGPath);
 
-    drawer.classList.remove('is-open');
-    drawer.classList.add('is-closing');
-
-    closeTimeoutId = window.setTimeout(() => {
-      drawer.classList.remove('is-closing');
-      drawer.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      targetCurveX = 100;
-      currentCurveX = 100;
-      closeTimeoutId = null;
-    }, drawerDuration);
+    closeTimeoutId = window.setTimeout(finishClose, drawerDuration + 40);
   };
 
   triggers.forEach((trigger) => {
@@ -368,7 +397,7 @@ function initPageTransitions() {
 
   const sessionKey = 'krize-kster-page-transition';
   const windowNameMarker = '__krize_kster_page_transition__=';
-  const transitionDuration = 1000;
+  const transitionDuration = 1060;
 
   const clearOverlay = () => {
     overlay.classList.remove('is-active', 'is-covering', 'is-revealing');
@@ -458,24 +487,29 @@ function initPageTransitions() {
     }, transitionDuration);
   };
 
-  document.querySelectorAll<HTMLAnchorElement>('[data-page-transition]').forEach((link) => {
-    link.addEventListener('click', (event) => {
-      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  // Delegation keeps the handoff consistent for links added by search and
+  // filter UI after the initial document has loaded.
+  document.addEventListener('click', (event) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
 
-      const target = new URL(link.href, window.location.href);
-      if (target.origin !== window.location.origin || link.target === '_blank') return;
+    const origin = event.target;
+    if (!(origin instanceof Element)) return;
+    const link = origin.closest<HTMLAnchorElement>('[data-page-transition]');
+    if (!link) return;
 
-      const isCurrentPage = target.pathname === window.location.pathname && target.search === window.location.search && target.hash === window.location.hash;
-      if (isCurrentPage) {
-        if (link.closest('#nav-drawer')) window.dispatchEvent(new CustomEvent('drawer:close'));
-        event.preventDefault();
-        return;
-      }
+    const target = new URL(link.href, window.location.href);
+    if (target.origin !== window.location.origin || link.target === '_blank') return;
 
-      event.preventDefault();
+    const isCurrentPage = target.pathname === window.location.pathname && target.search === window.location.search && target.hash === window.location.hash;
+    if (isCurrentPage) {
       if (link.closest('#nav-drawer')) window.dispatchEvent(new CustomEvent('drawer:close'));
-      startTransition(`${target.pathname}${target.search}${target.hash}`, link.dataset.transitionLabel || link.textContent?.trim() || 'Loading');
-    });
+      event.preventDefault();
+      return;
+    }
+
+    event.preventDefault();
+    if (link.closest('#nav-drawer')) window.dispatchEvent(new CustomEvent('drawer:close'));
+    startTransition(`${target.pathname}${target.search}${target.hash}`, link.dataset.transitionLabel || link.textContent?.trim() || 'Loading');
   });
 
   replayArrival();

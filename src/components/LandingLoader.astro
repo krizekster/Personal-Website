@@ -59,12 +59,13 @@ if (loader && greeting) {
       ];
       const totalDuration = 4000;
       const exitDuration = 700;
-      const wordDuration = (totalDuration - exitDuration) / greetings.length;
+      const greetingDuration = totalDuration - exitDuration;
+      const wordDuration = greetingDuration / greetings.length;
       let dismissed = false;
 
       document.documentElement.classList.add('landing-is-loading');
 
-      const setGreeting = (item, index) => {
+      const setGreeting = (item) => {
         greeting.classList.remove('is-visible');
         window.setTimeout(() => {
           greeting.textContent = item.text;
@@ -77,17 +78,22 @@ if (loader && greeting) {
         if (dismissed) return;
         dismissed = true;
         loader.classList.add('is-leaving');
-        // Reveal the page as the loader lifts away instead of exposing the
-        // landing screen in a single frame.
-        document.documentElement.classList.remove('landing-is-loading');
-        window.setTimeout(() => loader.remove(), 720);
+        // Keep the page hidden until the greeting screen has completely
+        // lifted. This prevents the landing-page fade from competing with
+        // the final language in the sequence.
+        window.setTimeout(() => {
+          loader.remove();
+          window.requestAnimationFrame(() => {
+            document.documentElement.classList.remove('landing-is-loading');
+          });
+        }, exitDuration + 20);
       };
 
       greetings.slice(1).forEach((item, index) => {
-        window.setTimeout(() => setGreeting(item, index + 1), (index + 1) * wordDuration);
+        window.setTimeout(() => setGreeting(item), (index + 1) * wordDuration);
       });
 
-      window.setTimeout(dismiss, totalDuration - exitDuration);
+      window.setTimeout(dismiss, greetingDuration);
     }
   }
 </script>
