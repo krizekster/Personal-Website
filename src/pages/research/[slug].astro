@@ -18,7 +18,7 @@ const pageTitle = `${entry.data.title} — Research by Krishna Soni`;
 ---
 
 <BaseLayout title={pageTitle} description={entry.data.abstract}>
-  <head slot="head">
+  <Fragment slot="head">
     {entry.data.doi && (
       <>
         <meta name="citation_title" content={entry.data.title} />
@@ -27,7 +27,7 @@ const pageTitle = `${entry.data.title} — Research by Krishna Soni`;
         {entry.data.date && <meta name="citation_publication_date" content={entry.data.date.toISOString().split('T')[0]} />}
       </>
     )}
-  </head>
+  </Fragment>
 
   <article class="page-hero max-w-4xl">
     <div class="flex items-center gap-3 font-mono text-xs text-sage-deep">

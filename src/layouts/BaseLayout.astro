@@ -47,34 +47,28 @@ const {
     <!-- Overlay Navigation Drawer -->
     <NavDrawer />
 
+    <!-- Curved handoff shown between internal menu pages -->
+    <div id="page-transition" class="page-transition-overlay" aria-hidden="true">
+      <p class="page-transition-overlay__label" aria-live="polite"></p>
+    </div>
+
     <script>
       import { initSnellenbergEffects } from '../scripts/snellenberg-effects';
+
+      // Internal handoffs must start at the page header. Otherwise a browser
+      // can retain a prior route's scroll offset and show a short route's
+      // footer as though it were the first section.
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+      }
+      if (!window.location.hash) {
+        window.scrollTo(0, 0);
+      }
 
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       if (!reducedMotion) {
         initSnellenbergEffects();
-
-        const revealTargets = [...document.querySelectorAll('main > section, main > article, .site-footer')];
-        const initialViewport = window.innerHeight * 0.9;
-        const revealObserver = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-revealed');
-              revealObserver.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.12 });
-
-        revealTargets.forEach((target) => {
-          if (target.getBoundingClientRect().top < initialViewport) {
-            target.classList.add('is-revealed');
-          } else {
-            revealObserver.observe(target);
-          }
-        });
-
-        document.documentElement.classList.add('motion-ready');
 
         const parallaxLayers = [...document.querySelectorAll('[data-parallax]')];
         let framePending = false;

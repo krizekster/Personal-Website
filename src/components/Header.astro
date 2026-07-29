@@ -1,11 +1,11 @@
 ---
 const pathname = Astro.url.pathname;
 const navItems = [
-  { label: 'About', href: '/about' },
-  { label: 'Research', href: '/research' },
-  { label: 'Ventures', href: '/ventures' },
-  { label: 'Writing', href: '/feed' },
-  { label: 'Book', href: '/the-power-of-gaming' },
+  { label: 'About', href: '/about/' },
+  { label: 'Research', href: '/research/' },
+  { label: 'Ventures', href: '/ventures/' },
+  { label: 'Writing', href: '/feed/' },
+  { label: 'Book', href: '/the-power-of-gaming/' },
 ];
 
 const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
@@ -13,14 +13,14 @@ const isActive = (href: string) => pathname === href || (href !== '/' && pathnam
 
 <header class="site-header">
   <div class="flex items-center justify-between gap-3">
-    <a href="/" class="group flex items-center gap-2.5" aria-label="Krize Kster home" data-magnetic data-magnetic-strength="0.3">
+    <a href="/" class="group flex items-center gap-2.5" aria-label="Krize Kster home" data-page-transition data-transition-label="Home" data-magnetic data-magnetic-strength="0.3">
       <span class="grid h-9 w-9 place-items-center rounded-full bg-ink text-xs font-extrabold tracking-[-.12em] text-paper transition-transform duration-200 group-hover:-rotate-6">KK</span>
       <span class="hidden text-sm font-extrabold tracking-[-.06em] sm:block magnetic-text">Krize Kster</span>
     </a>
 
     <nav class="flex max-w-[calc(100vw-11rem)] items-center gap-1 overflow-x-auto py-1 sm:max-w-none" aria-label="Main navigation">
       {navItems.map((item) => (
-        <a href={item.href} class="pill shrink-0" aria-current={isActive(item.href) ? 'page' : undefined} data-magnetic data-magnetic-strength="0.35">
+        <a href={item.href} class="pill shrink-0" aria-current={isActive(item.href) ? 'page' : undefined} data-page-transition data-transition-label={item.label} data-magnetic data-magnetic-strength="0.35">
           <span class="magnetic-text">{item.label}</span>
         </a>
       ))}

@@ -28,6 +28,7 @@ This document serves as the single source of truth for tracking **implemented fe
 - **Type Pairing:** Manrope (Display & Sans body) paired with DM Mono (Metadata & Eyebrows) loaded via Google Fonts.
 - **Editorial Palette:** Warm pastel-white paper background (`#f5f5ef`), dark ink (`#1d2921`), sage green accents (`#73836d`), and mist lines (`rgba(29,41,33,.17)`).
 - **Core Design Tokens:** Tokenized in [`src/styles/global.css`](file:///z:/Play/Personal%20Website/src/styles/global.css).
+- **Symmetrical Hero Typography:** Aligned `KRIZE` and `KSTER` horizontally on an identical baseline (`justify-between`), framing the portrait symmetrically on both sides with responsive image scaling (`w-[min(92vw,980px)]` to `sm:w-[min(82vw,1020px)]`).
 
 ---
 

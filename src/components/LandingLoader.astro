@@ -1,0 +1,93 @@
+<div id="landing-loader" class="landing-loader" aria-hidden="true">
+  <span id="loader-greeting" class="landing-loader__word is-visible" lang="hi">नमस्ते</span>
+</div>
+
+<noscript><style>#landing-loader { display: none !important; }</style></noscript>
+
+<script is:inline>
+const loader = document.getElementById('landing-loader');
+const greeting = document.getElementById('loader-greeting');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const loaderSkipKey = 'krize-kster-skip-next-home-loader';
+const loaderSkipMarker = '__krize_kster_skip_next_home_loader__';
+let shouldSkipLoader = false;
+
+try {
+  shouldSkipLoader = window.sessionStorage.getItem(loaderSkipKey) === 'true';
+} catch {
+  // Fall back to window.name when browser storage is unavailable.
+}
+
+if (!shouldSkipLoader) {
+  try {
+    shouldSkipLoader = window.name.includes(loaderSkipMarker);
+  } catch {
+    // The loader still runs if neither persistence mechanism is available.
+  }
+}
+
+if (loader && greeting) {
+  if (shouldSkipLoader) {
+    try {
+      window.sessionStorage.removeItem(loaderSkipKey);
+    } catch {
+      // Clear the window.name fallback below when needed.
+    }
+    try {
+      window.name = window.name.replace(loaderSkipMarker, '');
+    } catch {
+      // No persistence cleanup is needed when window.name is unavailable.
+    }
+  }
+
+  if (reduceMotion || shouldSkipLoader) {
+    loader.remove();
+  } else {
+      const greetings = [
+        { text: 'नमस्ते', lang: 'hi' },
+        { text: 'Hola', lang: 'es' },
+        { text: 'Bonjour', lang: 'fr' },
+        { text: 'Ciao', lang: 'it' },
+        { text: 'Hallo', lang: 'de' },
+        { text: 'Olá', lang: 'pt' },
+        { text: 'Hej', lang: 'sv' },
+        { text: 'Merhaba', lang: 'tr' },
+        { text: '你好', lang: 'zh' },
+        { text: '안녕하세요', lang: 'ko' },
+        { text: 'สวัสดี', lang: 'th' },
+        { text: 'こんにちは', lang: 'ja' },
+      ];
+      const totalDuration = 4000;
+      const exitDuration = 700;
+      const wordDuration = (totalDuration - exitDuration) / greetings.length;
+      let dismissed = false;
+
+      document.documentElement.classList.add('landing-is-loading');
+
+      const setGreeting = (item, index) => {
+        greeting.classList.remove('is-visible');
+        window.setTimeout(() => {
+          greeting.textContent = item.text;
+          greeting.lang = item.lang;
+          greeting.classList.add('is-visible');
+        }, 42);
+      };
+
+      const dismiss = () => {
+        if (dismissed) return;
+        dismissed = true;
+        loader.classList.add('is-leaving');
+        // Reveal the page as the loader lifts away instead of exposing the
+        // landing screen in a single frame.
+        document.documentElement.classList.remove('landing-is-loading');
+        window.setTimeout(() => loader.remove(), 720);
+      };
+
+      greetings.slice(1).forEach((item, index) => {
+        window.setTimeout(() => setGreeting(item, index + 1), (index + 1) * wordDuration);
+      });
+
+      window.setTimeout(dismiss, totalDuration - exitDuration);
+    }
+  }
+</script>

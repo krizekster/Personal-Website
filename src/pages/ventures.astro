@@ -66,4 +66,37 @@ import Card from '../components/Card.astro';
       </Card>
     </div>
   </section>
+
+  <section id="selected-private-workspaces" class="border-t border-line bg-paper-deep/40">
+    <div class="section-wrap">
+      <div class="grid gap-8 lg:grid-cols-[.65fr_1fr] lg:items-end">
+        <div>
+          <p class="eyebrow">05 / Selected private workspaces</p>
+          <h2 data-parallax="0.025" class="section-heading mt-3">Work that stays intentionally behind the scenes.</h2>
+        </div>
+        <p class="max-w-2xl text-sm leading-relaxed text-ink-soft">A public-facing record of ongoing product work. These notes focus on the problem each workspace is designed to address and the value it aims to create; internal assets, implementation details, data, and unreleased capabilities remain private.</p>
+      </div>
+
+      <div class="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <Card title="Codename TheLastOfUs" tag="05 / Interactive Tools" subtitle="2D creation workspace" accent="green">
+          <p>A private 2D creation workspace focused on helping ideas move from early concept to playable, testable experiences with greater clarity.</p>
+        </Card>
+        <Card title="Codename Deacon" tag="06 / Developer Tools" subtitle="Game team workspace" accent="steel">
+          <p>An AI-assisted game-development workspace designed to improve planning, coordination, and iteration across a game project’s lifecycle.</p>
+        </Card>
+        <Card title="Codename Joel" tag="07 / Player Experience" subtitle="Gaming companion" accent="blue">
+          <p>A player-focused companion workspace exploring more reflective, balanced ways to understand play and carry its positive habits into everyday routines.</p>
+        </Card>
+        <Card title="Codename Kratos" tag="08 / Personal Systems" subtitle="Productivity planner" accent="steel">
+          <p>A local-first productivity planner designed to turn priorities, focus, and day-to-day commitments into a calmer, more intentional routine.</p>
+        </Card>
+        <Card title="Codename Stranding" tag="09 / Personal Wellbeing" subtitle="Wellbeing planner" accent="green">
+          <p>A privacy-conscious wellbeing workspace for organizing personal routines, everyday habits, and self-care without treating private information as a product feature.</p>
+        </Card>
+        <Card title="Codename TGX1" tag="10 / Applied Intelligence" subtitle="Research workspace" accent="blue">
+          <p>A private research and intelligence workspace exploring context-aware tools for interactive experiences. Only the intended impact is public; the underlying methods, data, and models remain private.</p>
+        </Card>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

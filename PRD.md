@@ -1,7 +1,7 @@
 # Krize Kster Personal Website — Product Requirements Document
 
 **Status:** Active / living document  
-**Last updated:** 28 July 2026  
+**Last updated:** 29 July 2026  
 **Owner:** Krize Kster  
 **Repository:** `Personal Website` (Astro static site)
 
@@ -64,6 +64,8 @@ The current direction takes inspiration from modern editorial portfolios, partic
 - Added direct pathways to About, Ventures, and Writing.
 - Added featured venture cards for KRI ZEK and Altered Brilliance.
 - Added a latest-writing section driven by the existing Astro content collection.
+- Added a four-second, full-screen landing preloader on the home route. It shows only a sequence of twelve multilingual greetings, beginning with Hindi “नमस्ते” and ending with Japanese “こんにちは,” on the deep-ink menu color before lifting away to reveal the hero. It replays on a hard refresh, while returning to Home through the site logo does not replay it during the same session.
+- The loader is decorative to assistive technology and bypasses itself when the visitor uses `prefers-reduced-motion`.
 
 ### Core pages
 
@@ -88,9 +90,10 @@ The current direction takes inspiration from modern editorial portfolios, partic
 
 ### Responsive behavior
 
-- Validated the portrait-led homepage at desktop and mobile widths.
+- Validated the portrait-led homepage at desktop, laptop, tablet portrait, tablet landscape, mobile portrait, and mobile landscape widths.
 - Adjusted mobile portrait positioning so the image, wordmark, and supporting copy remain legible.
 - Navigation scrolls horizontally on narrow viewports instead of collapsing access to important pages.
+- Verified that Home, About, Research, Ventures, Writing, and Book templates avoid horizontal page overflow at 390px mobile width and at both tablet orientations.
 
 ## 7. Current information architecture
 
@@ -102,6 +105,8 @@ The current direction takes inspiration from modern editorial portfolios, partic
 | `/the-power-of-gaming` | Book landing page and themes |
 | `/feed` | Searchable writing index |
 | `/feed/[slug]` | Individual long-form articles |
+| `/research` | Research archive and publication index |
+| `/research/[slug]` | Individual research publication detail |
 
 ## 8. Technical implementation
 
@@ -119,15 +124,20 @@ The current direction takes inspiration from modern editorial portfolios, partic
 | `src/styles/global.css` | Theme tokens, components, typography, responsive and motion rules |
 | `src/components/Header.astro` | Main navigation and identity |
 | `src/components/Footer.astro` | Contact call to action and LinkedIn path |
+| `src/components/LandingLoader.astro` | Multilingual home-page preloader and transition logic |
 | `src/pages/index.astro` | Homepage hero and featured content |
 | `src/components/FeedSearch.astro` | Client-side writing search and filtering |
 
 ## 9. Validation completed
 
-- `npm run build` succeeds and generates all nine static routes.
+- `npm run build` succeeds and generates all fourteen static routes.
 - Confirmed local `200` responses for home, About, Ventures, book, Writing, a sample article, and the portrait asset.
 - Confirmed Writing search filters “Witcher” down to one matching article.
 - Confirmed motion initialization, active parallax offset changes during scroll, and section reveal activation in the local preview.
+- Confirmed the loader renders with the expected deep-ink menu color, multilingual greeting sequence, and post-animation DOM removal.
+- Normalized all internal routes to trailing-slash destinations and reset non-anchor route scroll on handoff, preventing an empty route shell from placing the shared footer at the top of the viewport.
+- Removed the global section-hiding reveal layer after it intermittently left route content invisible; parallax, drawer, marquee, and page-handoff motion remain active without obscuring page content.
+- Corrected invalid slotted `<head>` markup on About and Research routes. Metadata now uses Astro `Fragment` slots, keeping route content inside `<main>` and the footer at the document bottom. The home loader fades the landing page in as it lifts away, shows on direct visits and refreshes, and skips only one intentional in-site return to Home.
 
 ## 10. Content considerations
 

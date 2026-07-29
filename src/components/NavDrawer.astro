@@ -3,11 +3,11 @@ const pathname = Astro.url.pathname;
 
 const navItems = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  { label: 'Research', href: '/research' },
-  { label: 'Ventures', href: '/ventures' },
-  { label: 'Writing', href: '/feed' },
-  { label: 'Book', href: '/the-power-of-gaming' },
+  { label: 'About', href: '/about/' },
+  { label: 'Research', href: '/research/' },
+  { label: 'Ventures', href: '/ventures/' },
+  { label: 'Writing', href: '/feed/' },
+  { label: 'Book', href: '/the-power-of-gaming/' },
 ];
 
 const socialLinks = [
@@ -65,6 +65,8 @@ const isActive = (href: string) => {
                   class={`group inline-flex items-center gap-3 text-[clamp(2.4rem,5.5vw,4.2rem)] font-extrabold tracking-[-.06em] transition-colors duration-200 ${
                     active ? 'text-paper' : 'text-paper/60 hover:text-paper'
                   }`}
+                  data-page-transition
+                  data-transition-label={item.label}
                   data-magnetic
                   data-magnetic-strength="0.25"
                 >

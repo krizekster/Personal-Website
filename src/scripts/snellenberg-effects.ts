@@ -23,6 +23,9 @@ export function initSnellenbergEffects() {
 
   // 6. Dennis Snellenberg Elastic Overlay Drawer
   initDrawerController();
+
+  // 7. Curved handoff for internal navigation
+  initPageTransitions();
 }
 
 function initMagneticElements() {
@@ -263,6 +266,8 @@ function initDrawerController() {
   let targetCurveX = 100;
   let currentCurveX = 100;
   let animFrameId: number | null = null;
+  let closeTimeoutId: number | null = null;
+  const drawerDuration = 650;
 
   const updateSVGPath = () => {
     currentCurveX += (targetCurveX - currentCurveX) * 0.12;
@@ -284,7 +289,13 @@ function initDrawerController() {
   };
 
   const openDrawer = () => {
+    if (closeTimeoutId) {
+      window.clearTimeout(closeTimeoutId);
+      closeTimeoutId = null;
+    }
+
     isOpen = true;
+    drawer.classList.remove('is-closing');
     drawer.classList.add('is-open');
     drawer.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -298,20 +309,28 @@ function initDrawerController() {
   };
 
   const closeDrawer = () => {
+    if (!isOpen) return;
+
     isOpen = false;
 
-    // Bow outwards to the right as panel retracts
-    targetCurveX = 180;
+    // Reverse the opening bow while the panel retracts so both directions
+    // share the same elastic curve rather than snapping back to a flat edge.
+    currentCurveX = 100;
+    targetCurveX = 0;
     if (animFrameId) cancelAnimationFrame(animFrameId);
     animFrameId = requestAnimationFrame(updateSVGPath);
 
-    setTimeout(() => {
-      drawer.classList.remove('is-open');
+    drawer.classList.remove('is-open');
+    drawer.classList.add('is-closing');
+
+    closeTimeoutId = window.setTimeout(() => {
+      drawer.classList.remove('is-closing');
       drawer.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
       targetCurveX = 100;
       currentCurveX = 100;
-    }, 450);
+      closeTimeoutId = null;
+    }, drawerDuration);
   };
 
   triggers.forEach((trigger) => {
@@ -338,4 +357,126 @@ function initDrawerController() {
       closeDrawer();
     }
   });
+
+  window.addEventListener('drawer:close', closeDrawer);
+}
+
+function initPageTransitions() {
+  const overlay = document.getElementById('page-transition');
+  const label = overlay?.querySelector<HTMLElement>('.page-transition-overlay__label');
+  if (!overlay || !label) return;
+
+  const sessionKey = 'krize-kster-page-transition';
+  const windowNameMarker = '__krize_kster_page_transition__=';
+  const transitionDuration = 1000;
+
+  const clearOverlay = () => {
+    overlay.classList.remove('is-active', 'is-covering', 'is-revealing');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('page-transition-active');
+  };
+
+  const replayArrival = () => {
+    let pending: { label?: string; createdAt?: number } | null = null;
+
+    try {
+      const value = window.sessionStorage.getItem(sessionKey);
+      if (value) pending = JSON.parse(value);
+      window.sessionStorage.removeItem(sessionKey);
+    } catch {
+      // Continue with the window.name fallback below.
+    }
+
+    if (!pending) {
+      try {
+        const markerIndex = window.name.lastIndexOf(windowNameMarker);
+        if (markerIndex >= 0) {
+          const encoded = window.name.slice(markerIndex + windowNameMarker.length).split('|')[0];
+          pending = JSON.parse(decodeURIComponent(encoded));
+          window.name = window.name.replace(`${windowNameMarker}${encoded}`, '');
+        }
+      } catch {
+        // The outgoing transition still completed; only the arrival replay is skipped.
+      }
+    }
+
+    if (!pending?.label || !pending.createdAt || Date.now() - pending.createdAt > 5000) return;
+
+    label.textContent = pending.label;
+    overlay.classList.add('is-active', 'is-covering');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('page-transition-active');
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => overlay.classList.add('is-revealing'));
+    });
+
+    window.setTimeout(clearOverlay, transitionDuration);
+  };
+
+  const startTransition = (href: string, destinationLabel: string) => {
+    const destination = new URL(href, window.location.href);
+    label.textContent = destinationLabel;
+    overlay.classList.add('is-active');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('page-transition-active');
+
+    window.requestAnimationFrame(() => overlay.classList.add('is-covering'));
+
+    try {
+      const pendingTransition = JSON.stringify({ label: destinationLabel, createdAt: Date.now() });
+      window.sessionStorage.setItem(sessionKey, pendingTransition);
+      if (destination.pathname === '/' && !destination.hash) {
+        window.sessionStorage.setItem('krize-kster-skip-next-home-loader', 'true');
+      }
+
+      const encodedTransition = encodeURIComponent(pendingTransition);
+      if (!window.name.includes(`${windowNameMarker}${encodedTransition}`)) {
+        window.name = `${window.name}${window.name ? '|' : ''}${windowNameMarker}${encodedTransition}`;
+      }
+    } catch {
+      // Navigation still works if storage is unavailable; the window.name fallback is attempted below.
+      try {
+        const pendingTransition = encodeURIComponent(JSON.stringify({ label: destinationLabel, createdAt: Date.now() }));
+        window.name = `${window.name}${window.name ? '|' : ''}${windowNameMarker}${pendingTransition}`;
+        if (destination.pathname === '/' && !destination.hash && !window.name.includes('__krize_kster_skip_next_home_loader__')) {
+          window.name = `${window.name}__krize_kster_skip_next_home_loader__`;
+        }
+      } catch {
+        // Some embedded contexts block both persistence mechanisms.
+      }
+    }
+
+    window.setTimeout(() => {
+      // Reset beneath the covering overlay so every non-anchor route opens at
+      // its header, independent of the source route's scroll position.
+      if (!destination.hash) window.scrollTo(0, 0);
+      if (!destination.pathname.endsWith('/') && !destination.pathname.includes('.')) {
+        destination.pathname = `${destination.pathname}/`;
+      }
+      window.location.assign(`${destination.pathname}${destination.search}${destination.hash}`);
+    }, transitionDuration);
+  };
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-page-transition]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+      const target = new URL(link.href, window.location.href);
+      if (target.origin !== window.location.origin || link.target === '_blank') return;
+
+      const isCurrentPage = target.pathname === window.location.pathname && target.search === window.location.search && target.hash === window.location.hash;
+      if (isCurrentPage) {
+        if (link.closest('#nav-drawer')) window.dispatchEvent(new CustomEvent('drawer:close'));
+        event.preventDefault();
+        return;
+      }
+
+      event.preventDefault();
+      if (link.closest('#nav-drawer')) window.dispatchEvent(new CustomEvent('drawer:close'));
+      startTransition(`${target.pathname}${target.search}${target.hash}`, link.dataset.transitionLabel || link.textContent?.trim() || 'Loading');
+    });
+  });
+
+  replayArrival();
 }

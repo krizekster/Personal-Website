@@ -5,7 +5,7 @@ import Card from '../components/Card.astro';
 ---
 
 <BaseLayout title="About — Krize Kster" description="I'm Krishna Soni, founder and CEO of Kri Zek, working out of Jaipur.">
-  <head slot="head">
+  <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Person",
@@ -31,7 +31,7 @@ import Card from '../components/Card.astro';
         "https://thepowerofgaming.hashnode.dev"
       ]
     })} />
-  </head>
+  </Fragment>
 
   <section class="page-hero">
     <p class="eyebrow">About / 01</p>

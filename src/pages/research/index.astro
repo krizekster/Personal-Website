@@ -21,7 +21,7 @@ const description = "Peer-reviewed and preprint research on gaming, cognition, a
 ---
 
 <BaseLayout title={title} description={description}>
-  <head slot="head">
+  <Fragment slot="head">
     <!-- Google Scholar Meta Tags -->
     {sortedResearch.map((item) => (
       item.data.doi && (
@@ -58,7 +58,7 @@ const description = "Peer-reviewed and preprint research on gaming, cognition, a
         }
       }))
     )} />
-  </head>
+  </Fragment>
 
   <!-- Framing Header Section (No Parallax) -->
   <section class="page-hero">

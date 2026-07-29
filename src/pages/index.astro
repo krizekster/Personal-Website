@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LandingLoader from '../components/LandingLoader.astro';
 import { getCollection } from 'astro:content';
 
 const allArticles = await getCollection('feed');
@@ -17,7 +18,8 @@ const featuredResearch = (await getCollection('research'))
   title="Krize Kster — Engineer, Founder & Writer"
   description="The personal website of Krize Kster: thoughtful digital products, ventures, and writing."
 >
-  <section class="relative mx-auto min-h-[min(53rem,calc(100svh-5.7rem))] max-w-[1560px] overflow-hidden rounded-[2rem] bg-paper-deep px-5 pb-8 pt-5 sm:px-8 lg:min-h-[46rem]">
+  <LandingLoader />
+  <section class="landing-hero relative mx-auto min-h-[min(53rem,calc(100svh-5.7rem))] max-w-[1560px] overflow-hidden rounded-[2rem] bg-paper-deep px-5 pb-8 pt-5 sm:px-8 lg:min-h-[46rem]">
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_52%_40%,rgba(255,255,255,.85),transparent_24rem),linear-gradient(135deg,#f7f7f1_0%,#e4e9df_100%)]"></div>
     <div data-parallax="-0.1" class="absolute left-[6%] top-[18%] h-36 w-36 rounded-full border border-sage/20 sm:h-52 sm:w-52"></div>
     <div data-parallax="0.13" class="absolute bottom-[12%] right-[8%] h-20 w-20 rounded-full bg-[#cdd8c7] opacity-70 sm:h-36 sm:w-36"></div>
@@ -33,8 +35,8 @@ const featuredResearch = (await getCollection('research'))
         <span class="self-end pr-[.03em]">KSTER</span>
       </div>
 
-      <div data-parallax="-0.055" class="pointer-events-none absolute inset-x-0 bottom-44 z-10 flex h-[93%] justify-center sm:bottom-0">
-        <img src="/krize-kster-portrait.png" alt="" class="h-auto w-[155vw] max-w-none self-end object-contain object-bottom sm:w-[min(78vw,920px)]" />
+      <div class="pointer-events-none absolute inset-x-0 bottom-44 z-10 flex h-[93%] justify-center sm:bottom-0">
+        <img data-parallax="-0.055" src="/krize-kster-portrait.png" alt="" class="mx-auto h-auto w-[135vw] max-w-none self-end object-contain object-bottom sm:w-[min(70vw,840px)]" />
       </div>
 
       <div class="relative z-10 mt-auto grid grid-cols-1 items-end gap-5 sm:grid-cols-2">
@@ -85,7 +87,7 @@ const featuredResearch = (await getCollection('research'))
     <div>
       <h1 data-parallax="0.028" class="section-heading">The through-line is thoughtful systems.</h1>
       <p class="display-copy mt-8 max-w-2xl">Years spent at the intersection of gaming, neuroscience, and AI: the book, the peer-reviewed research, and the algorithm that turns gameplay into a proprietary cognitive dataset.</p>
-      <a href="/about" class="text-link mt-8" data-magnetic data-magnetic-strength="0.3"><span class="magnetic-text">More about the approach <span aria-hidden="true">↗</span></span></a>
+      <a href="/about/" class="text-link mt-8" data-magnetic data-magnetic-strength="0.3"><span class="magnetic-text">More about the approach <span aria-hidden="true">↗</span></span></a>
     </div>
   </section>
 
@@ -97,7 +99,7 @@ const featuredResearch = (await getCollection('research'))
           <p class="eyebrow">02 / Selected Research</p>
           <h2 data-parallax="0.025" class="section-heading mt-3">Quantifying human potential through play.</h2>
         </div>
-        <a href="/research" class="text-link shrink-0" data-magnetic data-magnetic-strength="0.3"><span class="magnetic-text">Explore all research <span aria-hidden="true">↗</span></span></a>
+        <a href="/research/" class="text-link shrink-0" data-magnetic data-magnetic-strength="0.3"><span class="magnetic-text">Explore all research <span aria-hidden="true">↗</span></span></a>
       </div>
 
       <div class="mt-10 space-y-4">
@@ -136,7 +138,7 @@ const featuredResearch = (await getCollection('research'))
           <p class="eyebrow">02 / Selected ventures</p>
           <h2 data-parallax="0.025" class="section-heading mt-3">Building in two directions.</h2>
         </div>
-        <a href="/ventures" class="text-link shrink-0" data-magnetic data-magnetic-strength="0.3"><span class="magnetic-text">See all ventures <span aria-hidden="true">↗</span></span></a>
+        <a href="/ventures/" class="text-link shrink-0" data-magnetic data-magnetic-strength="0.3"><span class="magnetic-text">See all ventures <span aria-hidden="true">↗</span></span></a>
       </div>
       <div class="mt-12 grid gap-5 md:grid-cols-2">
         <article class="project-card bg-[#31433a] text-paper group" data-preview-image="/krize-kster-portrait.png" data-preview-label="Explore">
@@ -146,7 +148,7 @@ const featuredResearch = (await getCollection('research'))
           </div>
           <div class="max-w-sm">
             <p class="text-base leading-relaxed text-mist">Technology ventures and systems work for organisations with complex, high-stakes problems.</p>
-            <a href="/ventures#krizek" class="text-link mt-6" data-magnetic data-magnetic-strength="0.35"><span class="magnetic-text">Explore KRI ZEK <span aria-hidden="true">↗</span></span></a>
+            <a href="/ventures/#krizek" class="text-link mt-6" data-magnetic data-magnetic-strength="0.35"><span class="magnetic-text">Explore KRI ZEK <span aria-hidden="true">↗</span></span></a>
           </div>
         </article>
         <article class="project-card bg-[#f8f8f2] text-ink group" data-preview-image="/krize-kster-portrait.png" data-preview-label="Explore">
@@ -156,7 +158,7 @@ const featuredResearch = (await getCollection('research'))
           </div>
           <div class="max-w-sm">
             <p class="text-base leading-relaxed text-ink-soft">Mobile-first tools shaped around focus, strong interaction design, and less digital clutter.</p>
-            <a href="/ventures#altered-brilliance" class="text-link mt-6" data-magnetic data-magnetic-strength="0.35"><span class="magnetic-text">Explore Altered Brilliance <span aria-hidden="true">↗</span></span></a>
+            <a href="/ventures/#altered-brilliance" class="text-link mt-6" data-magnetic data-magnetic-strength="0.35"><span class="magnetic-text">Explore Altered Brilliance <span aria-hidden="true">↗</span></span></a>
           </div>
         </article>
       </div>
@@ -169,7 +171,7 @@ const featuredResearch = (await getCollection('research'))
         <p class="eyebrow">03 / Notes &amp; writing</p>
         <h2 data-parallax="0.03" class="section-heading mt-3">Things worth thinking through.</h2>
         <p class="mt-6 max-w-sm text-sm leading-relaxed text-ink-soft">Notes on building software, systems, products, games, and the wider ideas behind them.</p>
-        <a href="/feed" class="button button-dark mt-8" data-magnetic data-magnetic-strength="0.35"><span class="magnetic-text">Read the journal <span aria-hidden="true">↗</span></span></a>
+        <a href="/feed/" class="button button-dark mt-8" data-magnetic data-magnetic-strength="0.35"><span class="magnetic-text">Read the journal <span aria-hidden="true">↗</span></span></a>
       </div>
       <div>
         {latestArticles.map((article, index) => (
