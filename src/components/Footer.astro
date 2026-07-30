@@ -72,9 +72,19 @@ const currentYear = new Date().getFullYear();
       </div>
     </div>
 
-    <div class="mt-14 flex flex-col justify-between gap-3 border-t border-paper/20 pt-4 font-mono text-[.64rem] uppercase tracking-[.08em] text-mist sm:flex-row">
+    <div class="mt-14 flex flex-col justify-between items-start sm:items-center gap-3 border-t border-paper/20 pt-4 font-mono text-[.64rem] uppercase tracking-[.08em] text-mist sm:flex-row">
       <span>© {currentYear} Krize Kster</span>
-      <span>Designed with clarity in mind</span>
+      <div class="flex flex-wrap items-center gap-4">
+        <button 
+          type="button" 
+          onclick="window.dispatchEvent(new CustomEvent('openCookieModal'))" 
+          class="hover:text-paper transition-colors underline underline-offset-4 cursor-pointer bg-transparent border-none p-0 font-mono text-[.64rem] uppercase tracking-[.08em] text-mist"
+        >
+          Cookie Preferences
+        </button>
+        <span class="hidden sm:inline">•</span>
+        <span>Designed with clarity in mind</span>
+      </div>
     </div>
   </div>
 </footer>
