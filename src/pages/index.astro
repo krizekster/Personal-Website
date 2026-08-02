@@ -36,7 +36,18 @@ const featuredResearch = (await getCollection('research'))
       </div>
 
       <div class="pointer-events-none absolute inset-x-0 bottom-44 z-10 flex h-[88%] justify-center sm:bottom-auto sm:top-[4%] sm:h-[85%]">
-        <img data-parallax="-0.03" src="/krize-kster-portrait.png" alt="" class="mx-auto h-auto w-[135vw] max-w-none self-end object-contain object-bottom sm:w-[min(70vw,840px)]" />
+        <img
+          data-parallax="-0.03"
+          src="/krize-kster-portrait-960.webp"
+          srcset="/krize-kster-portrait-960.webp 960w, /krize-kster-portrait-1920.webp 1920w"
+          sizes="(max-width: 639px) 135vw, (max-width: 1200px) 70vw, 840px"
+          width="1920"
+          height="1278"
+          fetchpriority="high"
+          decoding="async"
+          alt=""
+          class="mx-auto h-auto w-[135vw] max-w-none self-end object-contain object-bottom sm:w-[min(70vw,840px)]"
+        />
       </div>
 
       <div class="relative z-10 mt-auto grid grid-cols-1 items-end gap-5 sm:grid-cols-2">
@@ -109,7 +120,7 @@ const featuredResearch = (await getCollection('research'))
             target="_blank"
             rel="noopener noreferrer"
             class="editorial-card group block transition-all hover:border-sage-deep/40"
-            data-preview-image="/krize-kster-portrait.png"
+            data-preview-image="/krize-kster-portrait-960.webp"
             data-preview-label="DOI"
           >
             <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
@@ -141,7 +152,7 @@ const featuredResearch = (await getCollection('research'))
         <a href="/ventures/" class="text-link shrink-0" data-page-transition data-transition-label="Ventures" data-magnetic data-magnetic-strength="0.3"><span class="magnetic-text">See all ventures <span aria-hidden="true">↗</span></span></a>
       </div>
       <div class="mt-12 grid gap-5 md:grid-cols-2">
-        <article class="project-card bg-[#31433a] text-paper group" data-preview-image="/krize-kster-portrait.png" data-preview-label="Explore">
+        <article class="project-card bg-[#31433a] text-paper group" data-preview-image="/krize-kster-portrait-960.webp" data-preview-label="Explore">
           <div>
             <p class="eyebrow text-mist">01 / Enterprise</p>
             <h3 class="mt-5 text-[clamp(3rem,5vw,5.6rem)] font-extrabold leading-[.82] tracking-[-.09em]">KRI<br />ZEK</h3>
@@ -151,7 +162,7 @@ const featuredResearch = (await getCollection('research'))
             <a href="/ventures/#krizek" class="text-link mt-6" data-page-transition data-transition-label="Ventures" data-magnetic data-magnetic-strength="0.35"><span class="magnetic-text">Explore KRI ZEK <span aria-hidden="true">↗</span></span></a>
           </div>
         </article>
-        <article class="project-card bg-[#f8f8f2] text-ink group" data-preview-image="/krize-kster-portrait.png" data-preview-label="Explore">
+        <article class="project-card bg-[#f8f8f2] text-ink group" data-preview-image="/krize-kster-portrait-960.webp" data-preview-label="Explore">
           <div>
             <p class="eyebrow">02 / Consumer products</p>
             <h3 class="mt-5 text-[clamp(3rem,5vw,5.6rem)] font-extrabold leading-[.82] tracking-[-.09em]">Altered<br />Brilliance</h3>
@@ -175,7 +186,7 @@ const featuredResearch = (await getCollection('research'))
       </div>
       <div>
         {latestArticles.map((article, index) => (
-          <article class="editorial-card group" data-preview-image="/krize-kster-portrait.png" data-preview-label="Read">
+          <article class="editorial-card group" data-preview-image="/krize-kster-portrait-960.webp" data-preview-label="Read">
             <div class="flex justify-between gap-4 font-mono text-[.64rem] uppercase tracking-[.08em] text-ink-soft">
               <span>0{index + 1} / {article.data.category}</span>
               <span>{article.data.readTime}</span>

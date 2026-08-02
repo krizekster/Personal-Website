@@ -18,7 +18,7 @@ const isActive = (href: string) => pathname === href || (href !== '/' && pathnam
       <span class="hidden text-sm font-extrabold tracking-[-.06em] sm:block magnetic-text">Krize Kster</span>
     </a>
 
-    <nav class="flex max-w-[calc(100vw-11rem)] items-center gap-1 overflow-x-auto py-1 sm:max-w-none" aria-label="Main navigation">
+    <nav class="hidden items-center gap-1 py-1 md:flex" aria-label="Main navigation">
       {navItems.map((item) => (
         <a href={item.href} class="pill shrink-0" aria-current={isActive(item.href) ? 'page' : undefined} data-page-transition data-transition-label={item.label} data-magnetic data-magnetic-strength="0.35">
           <span class="magnetic-text">{item.label}</span>
@@ -28,5 +28,16 @@ const isActive = (href: string) => pathname === href || (href !== '/' && pathnam
         <span class="magnetic-text">Contact <span aria-hidden="true">↗</span></span>
       </a>
     </nav>
+
+    <button
+      type="button"
+      class="pill border-ink bg-ink text-paper hover:bg-sage-deep md:hidden"
+      data-drawer-trigger
+      aria-controls="nav-drawer"
+      aria-expanded="false"
+      aria-label="Open navigation menu"
+    >
+      Menu
+    </button>
   </div>
 </header>

@@ -9,6 +9,8 @@
   role="dialog"
   aria-labelledby="cookie-modal-title"
   aria-describedby="cookie-modal-desc"
+  aria-hidden="true"
+  inert
 >
   <div class="relative overflow-hidden rounded-3xl border border-line bg-paper/95 p-5 sm:p-6 shadow-2xl backdrop-blur-md text-ink">
     <!-- Header with Cookie Icon & Close Button -->
@@ -55,24 +57,24 @@
       <!-- Analytics -->
       <div class="flex items-center justify-between gap-3 text-xs">
         <div>
-          <span class="font-semibold text-ink">Analytics</span>
+          <span id="cookie-analytics-label" class="font-semibold text-ink">Analytics</span>
           <p class="text-[0.7rem] text-ink-soft">Helps us measure site traffic &amp; usage patterns.</p>
         </div>
         <label class="relative inline-flex items-center cursor-pointer shrink-0">
-          <input type="checkbox" id="cookie-analytics" class="sr-only peer" checked />
-          <div class="w-8 h-4.5 bg-mist peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-ink"></div>
+          <input type="checkbox" id="cookie-analytics" aria-labelledby="cookie-analytics-label" class="sr-only peer" checked />
+          <span class="block w-8 h-4.5 bg-mist peer-focus-visible:ring-2 peer-focus-visible:ring-blue-600 peer-focus-visible:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-ink"></span>
         </label>
       </div>
 
       <!-- Experience / Preferences -->
       <div class="flex items-center justify-between gap-3 text-xs">
         <div>
-          <span class="font-semibold text-ink">Preferences</span>
+          <span id="cookie-preferences-label" class="font-semibold text-ink">Preferences</span>
           <p class="text-[0.7rem] text-ink-soft">Saves your customized site &amp; layout preferences.</p>
         </div>
         <label class="relative inline-flex items-center cursor-pointer shrink-0">
-          <input type="checkbox" id="cookie-preferences" class="sr-only peer" checked />
-          <div class="w-8 h-4.5 bg-mist peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-ink"></div>
+          <input type="checkbox" id="cookie-preferences" aria-labelledby="cookie-preferences-label" class="sr-only peer" checked />
+          <span class="block w-8 h-4.5 bg-mist peer-focus-visible:ring-2 peer-focus-visible:ring-blue-600 peer-focus-visible:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-ink"></span>
         </label>
       </div>
     </div>
@@ -82,6 +84,8 @@
       <button 
         type="button" 
         id="cookie-toggle-details-btn" 
+        aria-controls="cookie-details"
+        aria-expanded="false"
         class="text-xs font-semibold text-ink-soft hover:text-ink underline underline-offset-4 transition-colors cursor-pointer"
       >
         Customize
@@ -127,18 +131,31 @@
     const analyticsCheckbox = document.getElementById('cookie-analytics') as HTMLInputElement | null;
     const preferencesCheckbox = document.getElementById('cookie-preferences') as HTMLInputElement | null;
 
-    if (!modal) return;
+    if (!modal || modal.dataset.cookieModalInitialized === 'true') return;
+    modal.dataset.cookieModalInitialized = 'true';
 
     let isDetailsExpanded = false;
+    let previouslyFocusedElement: HTMLElement | null = null;
 
-    function showModal() {
+    function showModal(moveFocus = false) {
+      modal?.removeAttribute('inert');
+      modal?.setAttribute('aria-hidden', 'false');
       modal?.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-6');
       modal?.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+
+      if (moveFocus) {
+        previouslyFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+        window.requestAnimationFrame(() => closeBtn?.focus());
+      }
     }
 
     function hideModal() {
       modal?.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
       modal?.classList.add('opacity-0', 'pointer-events-none', 'translate-y-6');
+      modal?.setAttribute('aria-hidden', 'true');
+      modal?.setAttribute('inert', '');
+      previouslyFocusedElement?.focus();
+      previouslyFocusedElement = null;
     }
 
     function saveConsent(analytics: boolean, preferences: boolean) {
@@ -169,6 +186,7 @@
         detailsContainer?.classList.add('hidden');
         toggleDetailsBtn.textContent = 'Customize';
       }
+      toggleDetailsBtn?.setAttribute('aria-expanded', String(isDetailsExpanded));
     });
 
     // Accept All button
@@ -209,8 +227,13 @@
       isDetailsExpanded = true;
       detailsContainer?.classList.remove('hidden');
       if (toggleDetailsBtn) toggleDetailsBtn.textContent = 'Hide Options';
+      toggleDetailsBtn?.setAttribute('aria-expanded', 'true');
 
-      showModal();
+      showModal(true);
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-cookie-preferences]').forEach((trigger) => {
+      trigger.addEventListener('click', () => window.dispatchEvent(new CustomEvent('openCookieModal')));
     });
 
     function scheduleInitialModalDisplay() {

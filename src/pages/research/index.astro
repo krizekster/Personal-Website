@@ -22,18 +22,6 @@ const description = "Peer-reviewed and preprint research on gaming, cognition, a
 
 <BaseLayout title={title} description={description}>
   <Fragment slot="head">
-    <!-- Google Scholar Meta Tags -->
-    {sortedResearch.map((item) => (
-      item.data.doi && (
-        <>
-          <meta name="citation_title" content={item.data.title} />
-          <meta name="citation_author" content="Krishna Soni" />
-          <meta name="citation_doi" content={item.data.doi} />
-          {item.data.date && <meta name="citation_publication_date" content={item.data.date.toISOString().split('T')[0]} />}
-        </>
-      )
-    ))}
-
     <!-- JSON-LD ScholarlyArticle Schema -->
     <script type="application/ld+json" set:html={JSON.stringify(
       sortedResearch.map((item) => ({
@@ -96,7 +84,7 @@ const description = "Peer-reviewed and preprint research on gaming, cognition, a
         const citationText = `${entry.data.authors.join(', ')}. "${entry.data.title}". ${entry.data.venue}${entry.data.venueDetail ? ` (${entry.data.venueDetail})` : ''}.${entry.data.doi ? ` DOI: https://doi.org/${entry.data.doi}` : ''}`;
 
         return (
-          <article class="editorial-card group transition-all" data-preview-image="/krize-kster-portrait.png" data-preview-label={doiUrl ? "Read DOI" : "Paper"}>
+          <article class="editorial-card group transition-all" data-preview-image="/krize-kster-portrait-960.webp" data-preview-label={doiUrl ? "Read DOI" : "Paper"}>
             <div class="grid gap-4 md:grid-cols-[4rem_1fr_auto] md:items-start">
               <span class="font-mono text-xs font-bold text-sage-deep">0{idx + 1}</span>
               <div>
@@ -106,7 +94,9 @@ const description = "Peer-reviewed and preprint research on gaming, cognition, a
                   {entry.data.date && <span>({new Date(entry.data.date).getFullYear()})</span>}
                 </div>
                 <h3 class="mt-3 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-                  {entry.data.title}
+                  <a href={`/research/${entry.id}/`} class="hover:text-sage-deep" data-page-transition data-transition-label="Research">
+                    {entry.data.title}
+                  </a>
                 </h3>
                 {entry.data.subtitle && (
                   <p class="mt-1 text-sm font-medium text-ink-soft">{entry.data.subtitle}</p>

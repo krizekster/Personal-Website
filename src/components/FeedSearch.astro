@@ -18,14 +18,14 @@ const categories = ['ALL', 'Engineering', 'Philosophy', 'Gaming', 'Ventures'];
 
 <div id="search-container">
   <div class="flex flex-col justify-between gap-5 border-b border-line pb-6 lg:flex-row lg:items-center">
-    <label class="relative block w-full lg:max-w-md" for="search-input">
+    <label class="relative block w-full lg:max-w-md">
       <span class="sr-only">Search writing</span>
       <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-soft" aria-hidden="true">⌕</span>
-      <input id="search-input" type="search" placeholder="Search the notes" class="w-full rounded-full border border-line bg-paper px-10 py-3 text-sm outline-none placeholder:text-ink-soft focus:border-ink" />
+      <input id="search-input" type="search" placeholder="Search the notes" aria-controls="articles-list" autocomplete="off" class="w-full rounded-full border border-line bg-paper px-10 py-3 text-sm outline-none placeholder:text-ink-soft focus:border-ink" />
     </label>
-    <div class="flex flex-wrap gap-2" aria-label="Filter writing by topic">
+    <div class="flex flex-wrap gap-2" role="group" aria-label="Filter writing by topic">
       {categories.map((category) => (
-        <button data-category={category} class={`filter-btn rounded-full border border-line bg-paper px-3 py-2 font-mono text-[.64rem] uppercase tracking-[.07em] transition-colors hover:border-ink ${category === 'ALL' ? 'active' : ''}`}>
+        <button type="button" data-category={category} aria-pressed={category === 'ALL' ? 'true' : 'false'} class={`filter-btn rounded-full border border-line bg-paper px-3 py-2 font-mono text-[.64rem] uppercase tracking-[.07em] transition-colors hover:border-ink ${category === 'ALL' ? 'active' : ''}`}>
           {category}
         </button>
       ))}
@@ -33,7 +33,7 @@ const categories = ['ALL', 'Engineering', 'Philosophy', 'Gaming', 'Ventures'];
   </div>
 
   <div class="flex justify-between py-4 font-mono text-[.64rem] uppercase tracking-[.08em] text-ink-soft">
-    <span><span id="results-count" class="font-bold text-ink">{articles.length}</span> notes</span>
+    <span aria-live="polite" aria-atomic="true"><span id="results-count" class="font-bold text-ink">{articles.length}</span> notes</span>
     <span>Selected ideas</span>
   </div>
 
@@ -103,7 +103,11 @@ const categories = ['ALL', 'Engineering', 'Philosophy', 'Gaming', 'Ventures'];
   filterButtons.forEach((button) => {
     button.addEventListener('click', () => {
       currentCategory = button.getAttribute('data-category') || 'ALL';
-      filterButtons.forEach((candidate) => candidate.classList.toggle('active', candidate === button));
+      filterButtons.forEach((candidate) => {
+        const isActive = candidate === button;
+        candidate.classList.toggle('active', isActive);
+        candidate.setAttribute('aria-pressed', String(isActive));
+      });
       renderArticles();
     });
   });

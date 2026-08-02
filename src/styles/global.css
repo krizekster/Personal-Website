@@ -1,6 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
-
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('/fonts/manrope-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'DM Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/dm-mono-400-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'DM Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/dm-mono-500-latin.woff2') format('woff2');
+}
 
 @theme {
   --font-sans: 'Manrope', Arial, sans-serif;
@@ -38,7 +60,13 @@
   }
 
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   a { color: inherit; }
+  :target { scroll-margin-block: 1rem; }
+  :focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 4px;
+  }
   ::selection { background: var(--color-sage-deep); color: var(--color-paper); }
 }
 
@@ -50,6 +78,23 @@
   }
 
   .landing-is-loading .site-shell { opacity: 0; }
+
+  .skip-link {
+    position: fixed;
+    top: .75rem;
+    left: .75rem;
+    z-index: 100200;
+    border-radius: 999px;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    padding: .75rem 1rem;
+    font-size: .8rem;
+    font-weight: 700;
+    transform: translateY(calc(-100% - 1.5rem));
+    transition: transform .18s ease;
+  }
+
+  .skip-link:focus { transform: translateY(0); }
 
   .site-header {
     position: relative;
@@ -449,13 +494,18 @@
     top: 0;
     right: 0;
     bottom: 0;
-    width: clamp(320px, 45vw, 600px);
+    width: min(100%, 600px);
     background: var(--color-menu-surface);
     color: var(--color-paper);
     z-index: 99995;
     transform: translate3d(100%, 0, 0);
     transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: -1rem 0 3rem rgba(0, 0, 0, 0.35);
+  }
+
+  .drawer-content {
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .nav-drawer-root.is-open .drawer-panel {
@@ -582,13 +632,19 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
     .page-transition-overlay { display: none; }
     .floating-menu-badge,
     .drawer-backdrop,
     .drawer-panel,
     .drawer-nav-item,
     .drawer-footer { transition: none !important; }
+    .skip-link { transition: none; }
   }
+}
+
+@media (min-width: 768px) {
+  .drawer-panel { width: clamp(320px, 45vw, 600px); }
 }
 
 @media (max-width: 640px) {

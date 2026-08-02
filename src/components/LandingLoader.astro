@@ -1,19 +1,19 @@
-<div id="landing-loader" class="landing-loader" aria-hidden="true">
+<div id="landing-loader" class="landing-loader" aria-hidden="true" hidden>
   <span id="loader-greeting" class="landing-loader__word is-visible" lang="hi">नमस्ते</span>
 </div>
-
-<noscript><style>#landing-loader { display: none !important; }</style></noscript>
 
 <script is:inline>
 const loader = document.getElementById('landing-loader');
 const greeting = document.getElementById('loader-greeting');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const loaderSkipKey = 'krize-kster-skip-next-home-loader';
+const loaderSeenKey = 'krize-kster-home-loader-seen';
 const loaderSkipMarker = '__krize_kster_skip_next_home_loader__';
 let shouldSkipLoader = false;
 
 try {
-  shouldSkipLoader = window.sessionStorage.getItem(loaderSkipKey) === 'true';
+  shouldSkipLoader = window.sessionStorage.getItem(loaderSkipKey) === 'true'
+    || window.sessionStorage.getItem(loaderSeenKey) === 'true';
 } catch {
   // Fall back to window.name when browser storage is unavailable.
 }
@@ -27,6 +27,12 @@ if (!shouldSkipLoader) {
 }
 
 if (loader && greeting) {
+  try {
+    window.sessionStorage.setItem(loaderSeenKey, 'true');
+  } catch {
+    // The loader remains functional when browser storage is unavailable.
+  }
+
   if (shouldSkipLoader) {
     try {
       window.sessionStorage.removeItem(loaderSkipKey);
@@ -44,6 +50,7 @@ if (loader && greeting) {
     loader.remove();
     window.dispatchEvent(new CustomEvent('landingLoaderComplete'));
   } else {
+      loader.hidden = false;
       const greetings = [
         { text: 'नमस्ते', lang: 'hi' },
         { text: 'Hola', lang: 'es' },
@@ -58,7 +65,7 @@ if (loader && greeting) {
         { text: 'สวัสดี', lang: 'th' },
         { text: 'こんにちは', lang: 'ja' },
       ];
-      const totalDuration = 4000;
+      const totalDuration = 2200;
       const exitDuration = 700;
       const greetingDuration = totalDuration - exitDuration;
       const wordDuration = greetingDuration / greetings.length;

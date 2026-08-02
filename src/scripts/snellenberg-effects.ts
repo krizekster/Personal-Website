@@ -96,7 +96,7 @@ function initHoverPreviewModal() {
     modal.className = 'snellenberg-preview-modal';
     modal.innerHTML = `
       <div class="preview-img-container">
-        <img src="" alt="" class="preview-img" />
+        <img alt="" class="preview-img" width="960" height="638" />
       </div>
       <div class="preview-badge">
         <span class="preview-badge-text">View</span>
@@ -263,8 +263,12 @@ function initDrawerController(reducedMotion = false) {
   const triggers = document.querySelectorAll('[data-drawer-trigger], .floating-menu-badge');
   const closers = document.querySelectorAll('[data-drawer-close]');
   const curvePath = document.getElementById('drawer-curve-path') as SVGPathElement | null;
+  const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  const backgroundElements = [...document.querySelectorAll<HTMLElement>('body > .skip-link, body > .site-shell, body > .floating-menu-badge, body > #cookie-modal-root, body > #page-transition')];
+  const backgroundInertState = new Map<HTMLElement, boolean>();
 
   let isOpen = false;
+  let previouslyFocused: HTMLElement | null = null;
   let targetCurveX = 100;
   let currentCurveX = 100;
   let animFrameId: number | null = null;
@@ -307,10 +311,22 @@ function initDrawerController(reducedMotion = false) {
   const finishClose = () => {
     resetCurve();
     drawer.classList.remove('is-open', 'is-closing');
-    drawer.setAttribute('aria-hidden', 'true');
     setTriggerExpanded(false);
     document.body.style.overflow = '';
     closeTimeoutId = null;
+  };
+
+  const setBackgroundInert = (inert: boolean) => {
+    backgroundElements.forEach((element) => {
+      if (inert) {
+        backgroundInertState.set(element, element.hasAttribute('inert'));
+        element.setAttribute('inert', '');
+      } else if (!backgroundInertState.get(element)) {
+        element.removeAttribute('inert');
+      }
+    });
+
+    if (!inert) backgroundInertState.clear();
   };
 
   const openDrawer = () => {
@@ -319,12 +335,19 @@ function initDrawerController(reducedMotion = false) {
       closeTimeoutId = null;
     }
 
+    previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     isOpen = true;
+    drawer.removeAttribute('inert');
     drawer.classList.remove('is-closing');
     drawer.classList.add('is-open');
     drawer.setAttribute('aria-hidden', 'false');
     setTriggerExpanded(true);
+    setBackgroundInert(true);
     document.body.style.overflow = 'hidden';
+
+    window.requestAnimationFrame(() => {
+      drawer.querySelector<HTMLElement>('.drawer-close-btn')?.focus();
+    });
 
     // Elastic bow outwards to the left, then spring back to 100
     currentCurveX = 0;
@@ -343,6 +366,12 @@ function initDrawerController(reducedMotion = false) {
     if (!isOpen && !drawer.classList.contains('is-open')) return;
 
     isOpen = false;
+
+    setBackgroundInert(false);
+    previouslyFocused?.focus();
+    drawer.setAttribute('aria-hidden', 'true');
+    drawer.setAttribute('inert', '');
+    setTriggerExpanded(false);
 
     drawer.classList.remove('is-open');
     drawer.classList.add('is-closing');
@@ -380,10 +409,29 @@ function initDrawerController(reducedMotion = false) {
     });
   });
 
-  // Keyboard Escape Handler
+  // Keyboard escape and modal focus containment.
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && isOpen) {
       closeDrawer();
+      return;
+    }
+
+    if (e.key === 'Tab' && isOpen) {
+      const focusable = [...drawer.querySelectorAll<HTMLElement>(focusableSelector)]
+        .filter((element) => element.getClientRects().length > 0);
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+
+      if (e.shiftKey && (active === first || !drawer.contains(active))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (active === last || !drawer.contains(active))) {
+        e.preventDefault();
+        first.focus();
+      }
     }
   });
 

@@ -3,6 +3,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="The Power of Gaming — Krishna Soni" description="The Power of Gaming: A Journey Through The World Of Gaming And How It Enhances Us by Krishna Soni (Krizekster).">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Book',
+      name: 'The Power of Gaming: A Journey Through The World Of Gaming And How It Enhances Us',
+      author: { '@type': 'Person', name: 'Krishna Soni', alternateName: 'Krizekster' },
+      publisher: { '@type': 'Organization', name: 'Kri Zek LLC' },
+      datePublished: '2025-02',
+      bookFormat: 'https://schema.org/EBook',
+      url: 'https://play.google.com/store/books/details?id=J1GUEQAAQBAJ',
+      inLanguage: 'en'
+    })} />
+  </Fragment>
   <section class="section-wrap grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
     <div data-parallax="-0.06" class="mx-auto w-full max-w-sm rounded-[.7rem_1.75rem_1.75rem_.7rem] bg-[#31433a] p-6 shadow-[1.2rem_1.2rem_0_#becbb9] sm:p-9">
       <div class="flex min-h-[29rem] flex-col justify-between border border-paper/35 p-6 text-paper sm:min-h-[35rem] sm:p-8">

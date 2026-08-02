@@ -15,9 +15,10 @@ const { Content } = await render(entry);
 
 const doiUrl = entry.data.doi ? `https://doi.org/${entry.data.doi}` : null;
 const pageTitle = `${entry.data.title} — Research by Krishna Soni`;
+const pageUrl = new URL(`/research/${entry.id}/`, Astro.site);
 ---
 
-<BaseLayout title={pageTitle} description={entry.data.abstract}>
+<BaseLayout title={pageTitle} description={entry.data.abstract} ogType="article">
   <Fragment slot="head">
     {entry.data.doi && (
       <>
@@ -27,6 +28,22 @@ const pageTitle = `${entry.data.title} — Research by Krishna Soni`;
         {entry.data.date && <meta name="citation_publication_date" content={entry.data.date.toISOString().split('T')[0]} />}
       </>
     )}
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'ScholarlyArticle',
+      headline: entry.data.title,
+      name: entry.data.title,
+      description: entry.data.abstract,
+      abstract: entry.data.abstract,
+      url: pageUrl,
+      mainEntityOfPage: pageUrl,
+      author: entry.data.authors.map((author) => ({ '@type': 'Person', name: author })),
+      publisher: { '@type': 'Organization', name: entry.data.venue },
+      ...(entry.data.date && { datePublished: entry.data.date.toISOString() }),
+      ...(entry.data.doi && { identifier: `https://doi.org/${entry.data.doi}`, sameAs: `https://doi.org/${entry.data.doi}` }),
+      keywords: entry.data.keywords.join(', '),
+      inLanguage: 'en'
+    })} />
   </Fragment>
 
   <article class="page-hero max-w-4xl">

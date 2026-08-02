@@ -10,9 +10,28 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const formattedDate = entry.data.pubDate.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+const pageUrl = new URL(`/feed/${entry.id}/`, Astro.site);
 ---
 
-<BaseLayout title={`${entry.data.title} — Krize Kster`} description={entry.data.description}>
+<BaseLayout title={`${entry.data.title} — Krize Kster`} description={entry.data.description} ogType="article">
+  <Fragment slot="head">
+    <meta property="article:published_time" content={entry.data.pubDate.toISOString()} />
+    <meta property="article:section" content={entry.data.category} />
+    {entry.data.tags.map((tag) => <meta property="article:tag" content={tag} />)}
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: entry.data.title,
+      description: entry.data.description,
+      datePublished: entry.data.pubDate.toISOString(),
+      mainEntityOfPage: pageUrl,
+      url: pageUrl,
+      author: { '@type': 'Person', name: 'Krishna Soni', alternateName: 'Krize Kster' },
+      publisher: { '@type': 'Person', name: 'Krishna Soni', alternateName: 'Krize Kster' },
+      keywords: entry.data.tags.join(', '),
+      inLanguage: 'en'
+    })} />
+  </Fragment>
   <article class="mx-auto w-[min(100%-3rem,920px)] py-[clamp(4rem,10vw,8rem)]">
     <a href="/feed/" class="text-link" data-page-transition data-transition-label="Writing">← Back to writing</a>
     <header class="mt-12 border-b border-line pb-10">
