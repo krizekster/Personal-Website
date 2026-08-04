@@ -1,5 +1,4 @@
 <div id="landing-loader" class="landing-loader" aria-hidden="true" hidden>
-  <div class="landing-loader__circle" aria-hidden="true"></div>
   <span id="loader-greeting" class="landing-loader__word is-visible" lang="hi">नमस्ते</span>
 </div>
 
@@ -68,9 +67,7 @@ if (loader && greeting) {
       ];
       // Keep the greeting sequence snappy while preserving a clear visual beat.
       const wordDuration = 250;
-      const circleCoverDuration = 820;
-      const circleRevealDuration = 900;
-      const exitDuration = circleCoverDuration + circleRevealDuration;
+      const exitDuration = 700;
       const greetingDuration = greetings.length * wordDuration;
       let dismissed = false;
 
@@ -88,17 +85,17 @@ if (loader && greeting) {
       const dismiss = () => {
         if (dismissed) return;
         dismissed = true;
-        // First let the gray circle cover the greeting screen, then contract
-        // the full overlay into the same circular aperture used by route changes.
-        loader.classList.add('is-covering');
-        window.setTimeout(() => loader.classList.add('is-revealing'), circleCoverDuration);
+        loader.classList.add('is-leaving');
+        // Keep the page hidden until the greeting screen has completely
+        // lifted. This prevents the landing-page fade from competing with
+        // the final language in the sequence.
         window.setTimeout(() => {
           loader.remove();
           window.requestAnimationFrame(() => {
             document.documentElement.classList.remove('landing-is-loading');
             window.dispatchEvent(new CustomEvent('landingLoaderComplete'));
           });
-        }, exitDuration + 40);
+        }, exitDuration + 20);
       };
 
       greetings.slice(1).forEach((item, index) => {
