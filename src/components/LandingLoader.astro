@@ -65,8 +65,8 @@ if (loader && greeting) {
         { text: 'สวัสดี', lang: 'th' },
         { text: 'こんにちは', lang: 'ja' },
       ];
-      // Keep each greeting on screen for a full second so every language is readable.
-      const wordDuration = 1000;
+      // Keep the greeting sequence snappy while preserving a clear visual beat.
+      const wordDuration = 250;
       const exitDuration = 700;
       const greetingDuration = greetings.length * wordDuration;
       let dismissed = false;
